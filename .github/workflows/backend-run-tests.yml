@@ -24,7 +24,7 @@ jobs:
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Create .env.testing
-      run: cp .env .env.testing
+      run: cp .env.example .env.testing
 
     - name: Install Dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
