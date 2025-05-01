@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTOs\Movie;
 
 use App\DTOs\DTO;
@@ -12,7 +14,6 @@ final class FormMovieDTO extends DTO
         public readonly string $description,
         public readonly int $video_id,
         public readonly ?UploadedFile $image = null,
-    ) 
-    {
+    ) {
     }
 }

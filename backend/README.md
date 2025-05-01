@@ -10,3 +10,4 @@ This is a simple online cinema API. Created this API with pattern Controller-Ser
 4. Set up APP_URL and DATABASE data
 5. php artisan key:generate
 6. php artisan migrate
+7. Set up your web server (nginx or apache) or run php artisan serve (for local development)
