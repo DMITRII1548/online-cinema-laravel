@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Traits;
 
 trait AssertDTOData
@@ -26,7 +28,7 @@ trait AssertDTOData
     {
         $dto = $dtoClass::fromArray($data);
         $arrDTO = $dto->toArray();
-    
+
         foreach ($data as $key => $value) {
             $this->assertSame($value, $arrDTO[$key] ?? null, "Array DTO property '{$key}' does not match expected value.");
         }
