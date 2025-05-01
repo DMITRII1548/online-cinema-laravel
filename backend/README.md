@@ -1,6 +1,6 @@
 # ONLINE CINEMA API
 
-This is a simple online cinema API. Created this API with pattern Controller-Service-Repository
+This is a simple online cinema API. Created this API with pattern Controller-Service-Repository.
 
 # INSTALLATION
 
