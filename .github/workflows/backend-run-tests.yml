@@ -21,30 +21,26 @@ jobs:
         php-version: '8.2'
 
     - name: Copy .env
+      working-directory: backend
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-    - name: Create .env.testing
-      run: cp .env.example .env.testing
-
     - name: Install Dependencies
+      working-directory: backend
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Generate key
+      working-directory: backend
       run: php artisan key:generate
 
     - name: Set directory permissions
+      working-directory: backend
       run: chmod -R 777 storage bootstrap/cache
 
     - name: Create SQLite database
+      working-directory: backend
       run: |
         mkdir -p database
         touch database/database.sqlite
-
-    - name: Install Node.js dependencies
-      run: npm ci
-
-    - name: Build assets
-      run: npm run build
 
     - name: Run tests
       env:
