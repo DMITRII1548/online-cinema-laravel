@@ -4,11 +4,11 @@ on:
   push:
     paths:
       - 'backend/**'
-    branches: [ "master", "develop" ]
+    branches: ["master", "develop"]
   pull_request:
-    branches: [ "master", "develop" ]
+    branches: ["master", "develop"]
   workflow_dispatch:
-
+  
 jobs:
   laravel-tests:
 
