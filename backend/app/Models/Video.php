@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\Traits\HasVideoSrcAttribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Video extends Model
 {
-    use HasVideoSrcAttribute;
+    use HasFactory;
 
     protected $fillable = [
         'video',
     ];
 
-    public function movie(): BelongsTo
+    public function movie(): HasOne
     {
-        return $this->belongsTo(Movie::class);
+        return $this->hadOne(Movie::class);
     }
 }
