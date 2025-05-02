@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\Traits\HasImageSrcAttribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Movie extends Model
 {
-    use HasImageSrcAttribute;
+    use HasFactory;
 
     protected $fillable = [
         'title',
@@ -19,8 +20,8 @@ class Movie extends Model
         'video_id',
     ];
 
-    public function video(): HasOne
+    public function video(): BelongsTo
     {
-        return $this->hasOne(Video::class);
+        return $this->belongsTo(Video::class);
     }
 }
