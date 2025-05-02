@@ -18,6 +18,6 @@ final class MovieDTO extends DTO
         public readonly string $description,
         public readonly VideoDTO $video,
         public readonly string $image,
-    ) {  
+    ) {
     }
 }

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Repositories\Contracts;
+declare(strict_types=1);
 
-use App\Models\Movie;
-use Illuminate\Database\Eloquent\Model;
+namespace App\Repositories\Contracts;
 
 interface MovieRepositoryContract
 {

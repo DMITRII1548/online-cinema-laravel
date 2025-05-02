@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-use App\DTOs\DTO;
 use App\DTOs\Movie\MovieDTO;
 use App\DTOs\Video\VideoDTO;
 use App\Repositories\Contracts\MovieRepositoryContract;
@@ -11,8 +12,7 @@ class MovieService
 {
     public function __construct(
         private MovieRepositoryContract $movieRepository
-    )
-    {   
+    ) {
     }
 
     public function find(int $id): MovieDTO

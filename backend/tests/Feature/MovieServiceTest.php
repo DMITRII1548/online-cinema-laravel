@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\DTOs\Movie\MovieDTO;
@@ -32,7 +34,7 @@ class MovieServiceTest extends TestCase
         $this->assertTrue($data instanceof MovieDTO);
     }
 
-    
+
     public function test_find_a_movie_if_not_exists(): void
     {
         try {

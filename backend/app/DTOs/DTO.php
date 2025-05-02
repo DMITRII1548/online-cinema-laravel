@@ -19,7 +19,7 @@ abstract class DTO
 
             if (isset($data[$propertyName])) {
                 $type = $property->getType();
-                
+
                 if ($type && is_subclass_of($type->getName(), DTO::class)) {
                     $constructorArgs[$propertyName] = $data[$propertyName] instanceof DTO
                         ? $data[$propertyName]
