@@ -56,13 +56,13 @@ class MovieRepositoryTest extends TestCase
         $this->assertArrayHasKey('description', $movies[0]);
         $this->assertArrayHasKey('image', $movies[0]);
         $this->assertArrayHasKey('video', $movies[0]);
-    
-        $this->assertIsArray($movies[0]['video']); 
+
+        $this->assertIsArray($movies[0]['video']);
         $this->assertArrayHasKey('id', $movies[0]['video']);
         $this->assertArrayHasKey('video', $movies[0]['video']);
     }
 
-    public function test_paginate_movies_if_not_exists(): void 
+    public function test_paginate_movies_if_not_exists(): void
     {
         Movie::query()->delete();
 

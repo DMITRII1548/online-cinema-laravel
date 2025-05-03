@@ -26,7 +26,7 @@ class MovieRepository implements MovieRepositoryContract
 
     public function paginate(int $page = 1, int $count = 20): ?array
     {
-        $offset = ($page - 1 ) * $count;
+        $offset = ($page - 1) * $count;
 
         $movies = Movie::query()
             ->offset($offset)
