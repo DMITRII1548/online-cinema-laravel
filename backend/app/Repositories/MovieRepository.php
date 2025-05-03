@@ -23,4 +23,17 @@ class MovieRepository implements MovieRepositoryContract
 
         return $data;
     }
+
+    public function paginate(int $page = 1, int $count = 20): ?array
+    {
+        $offset = ($page - 1 ) * $count;
+
+        $movies = Movie::query()
+            ->offset($offset)
+            ->limit($count)
+            ->with('video')
+            ->get();
+
+        return $movies->isNotEmpty() ? $movies->toArray() : null;
+    }
 }

@@ -42,4 +42,32 @@ class MovieRepositoryTest extends TestCase
 
         $this->assertNull($data);
     }
+
+    public function test_paginate_movies_if_exists(): void
+    {
+        Movie::factory(100)->create();
+
+        $movies = $this->movieRepository->paginate();
+
+        $this->assertCount(20, $movies);
+
+        $this->assertArrayHasKey('id', $movies[0]);
+        $this->assertArrayHasKey('title', $movies[0]);
+        $this->assertArrayHasKey('description', $movies[0]);
+        $this->assertArrayHasKey('image', $movies[0]);
+        $this->assertArrayHasKey('video', $movies[0]);
+    
+        $this->assertIsArray($movies[0]['video']); 
+        $this->assertArrayHasKey('id', $movies[0]['video']);
+        $this->assertArrayHasKey('video', $movies[0]['video']);
+    }
+
+    public function test_paginate_movies_if_not_exists(): void 
+    {
+        Movie::query()->delete();
+
+        $movies = $this->movieRepository->paginate();
+
+        $this->assertNull($movies);
+    }
 }
