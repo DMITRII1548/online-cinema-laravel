@@ -76,7 +76,7 @@ class MovieServiceTest extends TestCase
     public function test_calculateMaxPages(): void
     {
         Movie::query()->delete();
-        
+
         Movie::factory(21)->create();
 
         $pages = $this->movieService->calculateMaxPages(20);
