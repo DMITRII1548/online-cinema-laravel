@@ -46,4 +46,64 @@ class MovieControllerTest extends TestCase
 
         $response->assertNotFound();
     }
+
+    public function test_paginate_movies_without_page_parameter(): void
+    {
+        Movie::query()->delete();
+
+        Movie::factory(21)->create();
+
+        $response = $this->get('/api/movies');
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'title',
+                        'description',
+                        'image',
+                        'video' => [
+                            'id',
+                            'video',
+                        ],
+                    ],
+                ],
+                'current_page',
+                'last_page',
+            ])
+            ->assertJsonCount(20, 'data')
+            ->assertJsonPath('current_page', 1)
+            ->assertJsonPath('last_page', 2);
+    }
+
+    public function test_paginate_movies_with_page_parameter(): void
+    {
+        Movie::query()->delete();
+
+        Movie::factory(41)->create();
+
+        $response = $this->get('/api/movies?page=2');
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'title',
+                        'description',
+                        'image',
+                        'video' => [
+                            'id',
+                            'video',
+                        ],
+                    ],
+                ],
+                'current_page',
+                'last_page',
+            ])
+            ->assertJsonCount(20, 'data')
+            ->assertJsonPath('current_page', 2)
+            ->assertJsonPath('last_page', 3);
+    }
 }

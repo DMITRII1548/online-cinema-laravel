@@ -39,9 +39,48 @@ class MovieServiceTest extends TestCase
     {
         try {
             $movie = Movie::factory()->create();
-            $data = $this->movieService->find($movie->id + 1);
+            $this->movieService->find($movie->id + 1);
         } catch (NotFoundHttpException $e) {
             $this->assertEquals($e->getStatusCode(), 404);
         }
+    }
+
+    public function test_paginate_movies_if_exists(): void
+    {
+        Movie::factory(100)->create();
+
+        $movies = Movie::query()
+            ->offset(0)
+            ->limit(20)
+            ->with('video')
+            ->get()
+            ->toArray();
+
+        $movies = collect($movies)
+            ->map(fn (array $movie) => MovieDTO::fromArray($movie));
+
+        $data = $this->movieService->paginate(1, 20);
+
+        $this->assertEquals($movies, $data);
+    }
+
+    public function test_paginate_movies_if_not_exists(): void
+    {
+        Movie::query()->delete();
+
+        $data = $this->movieService->paginate(1, 20);
+
+        $this->assertEquals(collect([]), $data);
+    }
+
+    public function test_calculateMaxPages(): void
+    {
+        Movie::query()->delete();
+
+        Movie::factory(21)->create();
+
+        $pages = $this->movieService->calculateMaxPages(20);
+
+        $this->assertSame(2, $pages);
     }
 }

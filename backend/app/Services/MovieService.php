@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\DTOs\Movie\MovieDTO;
-use App\DTOs\Video\VideoDTO;
 use App\Repositories\Contracts\MovieRepositoryContract;
+use Illuminate\Support\Collection;
 
 class MovieService
 {
@@ -19,12 +19,23 @@ class MovieService
     {
         $movie = $this->movieRepository->find($id);
 
-        if ($movie == null) {
+        if (!$movie) {
             abort(404);
         }
 
-        $movie['video'] = VideoDTO::fromArray($movie['video']);
-
         return MovieDTO::fromArray($movie);
+    }
+
+    public function paginate(int $page = 1, int $count = 20): Collection
+    {
+        $movies = $this->movieRepository->paginate($page, $count);
+
+        return collect($movies)
+            ->map(fn (array $movie) => MovieDTO::fromArray($movie));
+    }
+
+    public function calculateMaxPages(int $count): int
+    {
+        return (int)ceil($this->movieRepository->getCount() / $count);
     }
 }
