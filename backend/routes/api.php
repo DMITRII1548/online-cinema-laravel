@@ -11,5 +11,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::prefix('movies')->group(function () {
+    Route::get('/', [MovieController::class, 'index']);
     Route::get('/{movie:id}', [MovieController::class, 'show']);
 });

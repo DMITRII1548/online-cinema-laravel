@@ -70,4 +70,13 @@ class MovieRepositoryTest extends TestCase
 
         $this->assertNull($movies);
     }
+
+    public function test_get_movies_count(): void
+    {
+        Movie::query()->delete();
+
+        Movie::factory(10)->create();
+
+        $this->assertSame($this->movieRepository->getCount(), 10);
+    }
 }

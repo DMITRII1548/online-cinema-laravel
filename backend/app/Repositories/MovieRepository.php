@@ -36,4 +36,9 @@ class MovieRepository implements MovieRepositoryContract
 
         return $movies->isNotEmpty() ? $movies->toArray() : null;
     }
+
+    public function getCount(): int
+    {
+        return Movie::query()->count();
+    }
 }

@@ -33,4 +33,9 @@ class MovieService
         return collect($movies)
             ->map(fn (array $movie) => MovieDTO::fromArray($movie));
     }
+
+    public function calculateMaxPages(int $count): int
+    {
+        return (int)ceil($this->movieRepository->getCount() / $count);
+    }
 }
