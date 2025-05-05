@@ -47,7 +47,7 @@ class MovieRepositoryTest extends TestCase
     {
         Movie::factory(100)->create();
 
-        $movies = $this->movieRepository->paginate();
+        $movies = $this->movieRepository->paginate(1, 20);
 
         $this->assertCount(20, $movies);
 
