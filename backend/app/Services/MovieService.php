@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\DTOs\Movie\MovieDTO;
-use App\DTOs\Video\VideoDTO;
 use App\Repositories\Contracts\MovieRepositoryContract;
 use Illuminate\Support\Collection;
 
