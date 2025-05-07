@@ -15,14 +15,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->validateCsrfTokens([
+            'api/login',
+            'api/register',
+            'api/logout'
+        ]);
+
+        $middleware->redirectGuestsTo(fn () => abort(401));
+        $middleware->redirectUsersTo(fn () => abort(403));
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
-            if ($request->is('api/*')) {
-                return true;
-            }
-
-            return $request->expectsJson();
+            return $request->expectsJson() || $request->is('api/*');
         });
     })->create();
