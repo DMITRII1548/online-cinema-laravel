@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+declare(strict_types=1);
 
-use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 
 class VideoController extends Controller
 {
     public function index()
     {
-        
+
     }
 
     public function show()
