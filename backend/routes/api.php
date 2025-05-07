@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\MovieController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('movies')->group(function () {

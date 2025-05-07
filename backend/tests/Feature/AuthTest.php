@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -18,7 +19,7 @@ class AuthTest extends TestCase
         parent::setUp();
     }
 
-    public function test_login_sucessful(): void 
+    public function test_login_sucessful(): void
     {
         $user = User::factory()->create();
 
@@ -74,7 +75,7 @@ class AuthTest extends TestCase
         $user = User::factory()->make();
 
         $response = $this->post('/api/register', [
-            'name' => $user->name, 
+            'name' => $user->name,
             'email' => $user->email,
             'password' => 'password',
             'password_confirmation' => 'password',
