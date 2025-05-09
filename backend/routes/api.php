@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\VideoController;
-use App\Http\Middleware\HasAdminRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

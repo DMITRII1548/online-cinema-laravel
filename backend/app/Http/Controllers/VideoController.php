@@ -12,7 +12,7 @@ class VideoController extends Controller
 {
     public function __construct(
         private VideoService $videoService
-    ) {   
+    ) {
     }
 
     public function index()
@@ -32,7 +32,7 @@ class VideoController extends Controller
 
     public function store(StoreRequest $request): array|VideoResource
     {
-        $videoDTO = $request->toDTO(); 
-        return $this->videoService->store($videoDTO);       
+        $videoDTO = $request->toDTO();
+        return $this->videoService->store($videoDTO);
     }
 }

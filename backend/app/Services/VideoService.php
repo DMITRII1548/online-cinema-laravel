@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\DTOs\Video\FormVideoDTO;
 use App\DTOs\Video\VideoDTO;
 use App\Http\Resources\Video\VideoResource;
 use App\Repositories\Contracts\VideoRepositoryContract;
-use App\Repositories\VideoRepository;
 use Illuminate\Support\Facades\Storage;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
@@ -21,7 +22,7 @@ class VideoService
 
     public function store(FormVideoDTO $dto): array|VideoResource
     {
-        $request = request(); 
+        $request = request();
         $request->files->set('file', $dto->video);
 
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
@@ -50,11 +51,11 @@ class VideoService
         $extension = $file->getClientOriginalExtension();
         $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $uniqueFileName = $fileName . '-' . now()->timestamp . '.' . $extension;
-    
+
         $path = Storage::putFileAs('videos', $file, $uniqueFileName);
-    
+
         unlink($file->getPathname());
-    
+
         $video = $this->videoRepository->store([
             'video' => $path,
         ]);
