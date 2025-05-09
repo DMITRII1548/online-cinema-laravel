@@ -8,7 +8,7 @@ namespace App\Models;
 
 use App\Models\Traits\HasRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -55,8 +55,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function roles(): HasMany
+    public function roles(): BelongsToMany
     {
-        return $this->hasMany(Role::class);
+        return $this->belongsToMany(Role::class);
     }
 }

@@ -4,8 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Video\StoreRequest;
+use App\Http\Resources\Video\VideoResource;
+use App\Services\VideoService;
+
 class VideoController extends Controller
 {
+    public function __construct(
+        private VideoService $videoService
+    ) {
+    }
+
     public function index()
     {
 
@@ -21,8 +30,9 @@ class VideoController extends Controller
 
     }
 
-    public function store()
+    public function store(StoreRequest $request): array|VideoResource
     {
-
+        $videoDTO = $request->toDTO();
+        return $this->videoService->store($videoDTO);
     }
 }
