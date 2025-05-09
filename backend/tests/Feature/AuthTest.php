@@ -29,8 +29,10 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertOk()
-            ->assertJson([
-                'two_factor' => false,
+            ->assertJsonPath('two_factor', false)
+            ->assertJsonStructure([
+                'token',
+                'two_factor',
             ]);
 
         $this->assertAuthenticatedAs($user);

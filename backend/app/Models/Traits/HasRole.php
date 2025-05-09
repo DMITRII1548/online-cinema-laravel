@@ -7,7 +7,7 @@ trait HasRole
     public function hasRole(string $role): ?bool
     {
         return $this->roles
-            ->pluck('title')
+            ->pluck('name')
             ->contains($role);
     }
 }

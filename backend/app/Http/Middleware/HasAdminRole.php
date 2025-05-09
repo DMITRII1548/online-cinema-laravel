@@ -15,10 +15,6 @@ class HasAdminRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->user()) {
-            abort(401);
-        } 
-
         if (!auth()->user()->hasRole('admin')) {
             abort(403);
         }
