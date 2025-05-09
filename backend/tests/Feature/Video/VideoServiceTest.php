@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Services;
+namespace Tests\Feature\Video;
 
 use App\DTOs\Video\FormVideoDTO;
 use App\Http\Resources\Video\VideoResource;

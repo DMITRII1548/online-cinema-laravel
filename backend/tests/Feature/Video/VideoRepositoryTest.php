@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Video;
 
 use App\Models\Video;
 use App\Repositories\Contracts\VideoRepositoryContract;
