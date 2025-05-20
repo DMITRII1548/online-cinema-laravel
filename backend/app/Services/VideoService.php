@@ -45,6 +45,19 @@ class VideoService
         ];
     }
 
+    public function destroy(int $id): void
+    {
+        $video = $this->videoRepository->find($id);
+
+        if ($video) {
+            $videoDTO = VideoDTO::fromArray($video);
+            Storage::delete($videoDTO->video);
+            $this->videoRepository->delete($id);
+        } else {
+            abort(404);
+        }
+    }
+
     private function handleVideoFinishedReceived(AbstractSave $fileReceived): VideoResource
     {
         $file = $fileReceived->getFile();

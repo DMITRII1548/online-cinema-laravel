@@ -6,5 +6,7 @@ namespace App\Repositories\Contracts;
 
 interface VideoRepositoryContract
 {
+    public function find(int $id): ?array;
     public function store(array $data): array;
+    public function delete(int $id): void;
 }

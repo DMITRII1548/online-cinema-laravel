@@ -6,6 +6,7 @@ namespace Tests\Feature\Video;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Video;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -59,5 +60,27 @@ class VideoControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure(['data' => ['id', 'video']]);
+    }
+
+    public function test_destroying_video_successful_if_exists(): void
+    {
+        $video = Video::factory()->create([
+            'id' => 1,
+            'video' => 'video.mp4',
+        ]);
+
+        $response = $this->delete("/api/videos/{$video->id}");
+
+        $response->assertStatus(200)
+            ->assertJson(['message' => 'Video deleted successfully',]);
+    }
+
+    public function test_destroying_video_if_not_exist(): void
+    {
+        Video::query()->delete();
+
+        $response = $this->delete('/api/videos/1');
+
+        $response->assertStatus(404);
     }
 }
