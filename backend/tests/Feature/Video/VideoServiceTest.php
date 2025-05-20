@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Video;
 
 use App\Models\Video;
@@ -21,7 +23,7 @@ class VideoServiceTest extends TestCase
         parent::setUp();
 
         Storage::fake('public');
-        
+
         $this->videoService = app()->make(VideoService::class);
     }
 

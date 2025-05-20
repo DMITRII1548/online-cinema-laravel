@@ -33,5 +33,5 @@ class VideoRepository implements VideoRepositoryContract
         Video::query()
             ->where('id', $id)
             ->delete();
-    }   
+    }
 }
