@@ -15,4 +15,23 @@ class VideoRepository implements VideoRepositoryContract
             ->create($data)
             ->toArray();
     }
+
+    public function find(int $id): ?array
+    {
+        $video = Video::query()
+            ->find($id);
+
+        if (!$video) {
+            return null;
+        }
+
+        return $video->toArray();
+    }
+
+    public function delete(int $id): void
+    {
+        Video::query()
+            ->where('id', $id)
+            ->delete();
+    }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit;
+namespace Tests\Unit\DTOs\Movie;
 
 use App\DTOs\Movie\MovieDTO;
 use App\DTOs\Video\VideoDTO;

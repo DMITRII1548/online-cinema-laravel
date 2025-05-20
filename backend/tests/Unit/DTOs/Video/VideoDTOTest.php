@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit;
+namespace Tests\Unit\DTOs\Video;
 
 use App\DTOs\Video\VideoDTO;
 use PHPUnit\Framework\TestCase;

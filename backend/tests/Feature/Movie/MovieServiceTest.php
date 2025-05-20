@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Movie;
 
 use App\DTOs\Movie\MovieDTO;
 use App\Models\Movie;

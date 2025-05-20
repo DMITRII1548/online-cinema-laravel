@@ -16,4 +16,6 @@ Route::prefix('movies')->group(function () {
     Route::get('/{movie:id}', [MovieController::class, 'show']);
 });
 
-Route::apiResource('videos', VideoController::class)->middleware('admin');
+Route::apiResource('videos', VideoController::class)
+    ->except('update')
+    ->middleware('admin');

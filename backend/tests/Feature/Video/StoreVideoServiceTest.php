@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Services;
+namespace Tests\Feature\Video;
 
 use App\DTOs\Video\FormVideoDTO;
 use App\Http\Resources\Video\VideoResource;
@@ -15,7 +15,7 @@ use Mockery;
 use Pion\Laravel\ChunkUpload\Save\AbstractSave;
 use Tests\TestCase;
 
-class VideoServiceTest extends TestCase
+class StoreVideoServiceTest extends TestCase
 {
     use RefreshDatabase;
 
