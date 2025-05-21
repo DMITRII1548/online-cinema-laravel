@@ -54,7 +54,7 @@ class VideoServiceTest extends TestCase
         }
     }
 
-    public function test_find_a_video_if_exists(): void 
+    public function test_find_a_video_if_exists(): void
     {
         $video = Video::factory()->create();
 
