@@ -21,9 +21,11 @@ class VideoController extends Controller
 
     }
 
-    public function show()
+    public function show(int $id)
     {
+        $video = $this->videoService->find($id);
 
+        return VideoResource::make($video)->resolve();
     }
 
     public function store(StoreRequest $request): array|VideoResource

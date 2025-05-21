@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Video;
 
+use App\DTOs\Video\VideoDTO;
 use App\Models\Video;
 use App\Services\VideoService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -48,6 +49,26 @@ class VideoServiceTest extends TestCase
 
         try {
             $this->videoService->destroy(1);
+        } catch (NotFoundHttpException $e) {
+            $this->assertEquals($e->getStatusCode(), 404);
+        }
+    }
+
+    public function test_find_a_video_if_exists(): void 
+    {
+        $video = Video::factory()->create();
+
+        $data = $this->videoService->find($video->id);
+
+        $this->assertTrue($data instanceof VideoDTO);
+    }
+
+    public function test_find_a_video_if_not_exists(): void
+    {
+        Video::query()->delete();
+
+        try {
+            $this->videoService->find(1);
         } catch (NotFoundHttpException $e) {
             $this->assertEquals($e->getStatusCode(), 404);
         }
