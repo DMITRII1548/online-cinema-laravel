@@ -34,4 +34,22 @@ class VideoRepository implements VideoRepositoryContract
             ->where('id', $id)
             ->delete();
     }
+
+    public function paginate(int $page = 1, int $count = 20): ?array
+    {
+        $offset = ($page - 1) * $count;
+
+        $videos = Video::query()
+            ->offset($offset)
+            ->limit($count)
+            ->get();
+
+        return $videos->isNotEmpty() ? $videos->toArray() : null;
+    }
+
+    public function getCount(): int
+    {
+        return Video::query()
+            ->count();
+    }
 }

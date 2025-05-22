@@ -73,7 +73,7 @@ class MovieServiceTest extends TestCase
         $this->assertEquals(collect([]), $data);
     }
 
-    public function test_calculateMaxPages(): void
+    public function test_calculate_max_pages(): void
     {
         Movie::query()->delete();
 

@@ -30,6 +30,30 @@ class VideoControllerTest extends TestCase
         $this->actingAs($user);
     }
 
+    public function test_showing_a_video_if_exists(): void
+    {
+        $video = Video::factory()->create();
+
+        $response = $this->get("/api/videos/{$video->id}");
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'id',
+                'video',
+            ])
+            ->assertJsonPath('id', $video->id)
+            ->assertJsonPath('video', url('') . '/storage/' . $video->video);
+    }
+
+    public function test_showing_a_video_if_not_exists(): void
+    {
+        Video::query()->delete();
+
+        $response = $this->get('/api/videos/1');
+
+        $response->assertStatus(404);
+    }
+
     public function test_storing_chunk_successful(): void
     {
         $file = UploadedFile::fake()->create('video.mp4', 1000, 'video/mp4');
@@ -82,5 +106,54 @@ class VideoControllerTest extends TestCase
         $response = $this->delete('/api/videos/1');
 
         $response->assertStatus(404);
+    }
+
+
+    public function test_paginate_videos_without_page_parameter(): void
+    {
+        Video::query()->delete();
+
+        Video::factory(21)->create();
+
+        $response = $this->get('/api/videos');
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'video',
+                    ],
+                ],
+                'current_page',
+                'last_page',
+            ])
+            ->assertJsonCount(20, 'data')
+            ->assertJsonPath('current_page', 1)
+            ->assertJsonPath('last_page', 2);
+    }
+
+    public function test_paginate_videos_with_page_parameter(): void
+    {
+        Video::query()->delete();
+
+        Video::factory(41)->create();
+
+        $response = $this->get('/api/videos?page=2');
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'video',
+                    ],
+                ],
+                'current_page',
+                'last_page',
+            ])
+            ->assertJsonCount(20, 'data')
+            ->assertJsonPath('current_page', 2)
+            ->assertJsonPath('last_page', 3);
     }
 }

@@ -8,6 +8,7 @@ use App\DTOs\Video\FormVideoDTO;
 use App\DTOs\Video\VideoDTO;
 use App\Http\Resources\Video\VideoResource;
 use App\Repositories\Contracts\VideoRepositoryContract;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
@@ -45,17 +46,36 @@ class VideoService
         ];
     }
 
-    public function destroy(int $id): void
+    public function find(int $id): VideoDTO
     {
         $video = $this->videoRepository->find($id);
 
         if ($video) {
-            $videoDTO = VideoDTO::fromArray($video);
-            Storage::delete($videoDTO->video);
-            $this->videoRepository->delete($id);
-        } else {
-            abort(404);
+            return VideoDTO::fromArray($video);
         }
+
+        abort(404);
+    }
+
+    public function destroy(int $id): void
+    {
+        $videoDTO = $this->find($id);
+
+        Storage::delete($videoDTO->video);
+        $this->videoRepository->delete($id);
+    }
+
+    public function paginate(int $page = 1, int $count = 20): Collection
+    {
+        $videos = $this->videoRepository->paginate($page, $count);
+
+        return collect($videos)
+            ->map(fn (array $video) => VideoDTO::fromArray($video));
+    }
+
+    public function calculateMaxPages(int $count): int
+    {
+        return (int)ceil($this->videoRepository->getCount() / $count);
     }
 
     private function handleVideoFinishedReceived(AbstractSave $fileReceived): VideoResource
