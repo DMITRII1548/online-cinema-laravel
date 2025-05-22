@@ -74,7 +74,7 @@ class VideoServiceTest extends TestCase
         }
     }
 
-    public function test_calculate_max_pages(): void 
+    public function test_calculate_max_pages(): void
     {
         Video::query()->delete();
         Video::factory(50)->create();
