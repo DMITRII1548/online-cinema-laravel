@@ -60,4 +60,36 @@ class VideoRepositoryTest extends TestCase
 
         $this->assertDatabaseMissing('videos', $video->toArray());
     }
+
+    public function test_get_a_count_of_videos_successful(): void
+    {
+        Video::query()->delete();
+        Video::factory()->count(5)->create();
+
+        $count = $this->videoRepository->getCount();
+
+        $this->assertEquals(5, $count);
+    }
+
+    public function test_pagination_of_videos_successful(): void
+    {
+        Video::query()->delete();
+        Video::factory()->count(5)->create();
+
+        $videos = $this->videoRepository->paginate(1, 2);
+
+        $this->assertCount(2, $videos);
+
+        $this->assertArrayHasKey('id', $videos[0]);
+        $this->assertArrayHasKey('video', $videos[0]);
+    }
+
+    public function test_pagination_of_videos_if_not_exist(): void
+    {
+        Video::query()->delete();
+
+        $videos = $this->videoRepository->paginate(1, 2);
+
+        $this->assertNull($videos);
+    }
 }

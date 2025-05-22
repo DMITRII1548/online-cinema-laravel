@@ -73,4 +73,42 @@ class VideoServiceTest extends TestCase
             $this->assertEquals($e->getStatusCode(), 404);
         }
     }
+
+    public function test_calculate_max_pages(): void 
+    {
+        Video::query()->delete();
+        Video::factory(50)->create();
+
+        $count = $this->videoService->calculateMaxPages(20);
+        $this->assertEquals(3, $count);
+    }
+
+    public function test_paginate_videos_if_not_exist(): void
+    {
+        Video::query()->delete();
+
+        $data = $this->videoService->paginate(1, 20);
+
+        $this->assertEquals(collect([]), $data);
+    }
+
+    public function test_paginate_videos_if_exists(): void
+    {
+        Video::query()->delete();
+        Video::factory(100)->create();
+
+        $videos = Video::query()
+            ->offset(0)
+            ->limit(20)
+            ->get()
+            ->toArray();
+
+        $videos = collect($videos)
+            ->map(fn (array $video) => VideoDTO::fromArray($video));
+
+        $data = $this->videoService->paginate(1, 20);
+
+        $this->assertEquals($videos, $data);
+    }
+
 }

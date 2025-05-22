@@ -107,4 +107,53 @@ class VideoControllerTest extends TestCase
 
         $response->assertStatus(404);
     }
+
+    
+    public function test_paginate_videos_without_page_parameter(): void
+    {
+        Video::query()->delete();
+
+        Video::factory(21)->create();
+
+        $response = $this->get('/api/videos');
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'video',
+                    ],
+                ],
+                'current_page',
+                'last_page',
+            ])
+            ->assertJsonCount(20, 'data')
+            ->assertJsonPath('current_page', 1)
+            ->assertJsonPath('last_page', 2);
+    }
+
+    public function test_paginate_videos_with_page_parameter(): void
+    {
+        Video::query()->delete();
+
+        Video::factory(41)->create();
+
+        $response = $this->get('/api/videos?page=2');
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'video',
+                    ],
+                ],
+                'current_page',
+                'last_page',
+            ])
+            ->assertJsonCount(20, 'data')
+            ->assertJsonPath('current_page', 2)
+            ->assertJsonPath('last_page', 3);
+    }
 }
