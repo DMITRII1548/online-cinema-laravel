@@ -108,7 +108,7 @@ class VideoControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    
+
     public function test_paginate_videos_without_page_parameter(): void
     {
         Video::query()->delete();
