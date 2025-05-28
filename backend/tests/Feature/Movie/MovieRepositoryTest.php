@@ -104,4 +104,15 @@ class MovieRepositoryTest extends TestCase
         $this->assertEquals($data['image'], $movie->image);
         $this->assertEquals($data['video_id'], $movie->video->id);
     }
+
+    public function test_deleting_a_movie_successful(): void
+    {
+        $movie = Movie::factory()->create();
+
+        $this->movieRepository->delete($movie->id);
+
+        $this->assertDatabaseMissing('movies', [
+            'id' => $movie->id,
+        ]);
+    }
 }

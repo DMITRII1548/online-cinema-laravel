@@ -110,4 +110,26 @@ class MovieServiceTest extends TestCase
 
         Storage::assertExists($data->image);
     }
+
+    public function test_deleting_a_movie_successful(): void
+    {
+        $movie = Movie::factory()->create();
+
+        $this->movieService->delete($movie->id);
+
+        $this->assertDatabaseMissing('movies', [
+            'id' => $movie->id,
+        ]);
+    }
+
+    public function test_deleting_a_movie_if_not_exists(): void
+    {
+        Movie::query()->delete();
+
+        try {
+            $this->movieService->delete(1);
+        } catch (NotFoundHttpException $e) {
+            $this->assertEquals($e->getStatusCode(), 404);
+        }
+    }
 }

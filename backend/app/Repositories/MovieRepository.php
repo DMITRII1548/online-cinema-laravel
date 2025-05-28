@@ -49,4 +49,11 @@ class MovieRepository implements MovieRepositoryContract
             ->load('video')
             ->toArray();
     }
+
+    public function delete(int $id): void
+    {
+        Movie::query()
+            ->where('id', $id)
+            ->delete();
+    }
 }

@@ -50,4 +50,11 @@ class MovieService
 
         return MovieDTO::fromArray($this->movieRepository->store($data));
     }
+
+    public function delete(int $id): void
+    {
+        $this->find($id);
+
+        $this->movieRepository->delete($id);
+    }
 }

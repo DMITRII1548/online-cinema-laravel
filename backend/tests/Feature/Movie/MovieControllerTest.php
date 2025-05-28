@@ -156,4 +156,29 @@ class MovieControllerTest extends TestCase
             ]);
 
     }
+
+    public function test_destroying_a_movie_successful(): void 
+    {
+        $this->actingAs($this->user);
+
+        $movie = Movie::factory()->create();
+
+        $response = $this->delete("/api/movies/{$movie->id}");
+
+        $response->assertOk()
+            ->assertJson([
+                'message' => 'Deleted movie successful',
+            ]);
+    }
+
+    public function test_destroying_a_movie_if_not_exists(): void
+    {
+        $this->actingAs($this->user);
+        
+        Movie::query()->delete();
+
+        $response = $this->delete('api/movies/1');
+
+        $response->assertNotFound();
+    }
 }

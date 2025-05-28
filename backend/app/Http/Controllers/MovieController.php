@@ -49,4 +49,13 @@ class MovieController extends Controller
             ->response()
             ->setStatusCode(201);
     }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $this->movieService->delete($id);
+
+        return response()->json([
+            'message' => 'Deleted movie successful',
+        ]);
+    }
 }
