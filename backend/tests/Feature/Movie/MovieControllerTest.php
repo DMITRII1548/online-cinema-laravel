@@ -157,7 +157,7 @@ class MovieControllerTest extends TestCase
 
     }
 
-    public function test_destroying_a_movie_successful(): void 
+    public function test_destroying_a_movie_successful(): void
     {
         $this->actingAs($this->user);
 
@@ -174,7 +174,7 @@ class MovieControllerTest extends TestCase
     public function test_destroying_a_movie_if_not_exists(): void
     {
         $this->actingAs($this->user);
-        
+
         Movie::query()->delete();
 
         $response = $this->delete('api/movies/1');
