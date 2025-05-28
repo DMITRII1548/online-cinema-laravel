@@ -5,12 +5,32 @@ declare(strict_types=1);
 namespace Tests\Feature\Movie;
 
 use App\Models\Movie;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Video;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class MovieControllerTest extends TestCase
 {
     use RefreshDatabase;
+
+    private User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Storage::fake('public');
+
+        $role = Role::firstOrCreate(['name' => 'admin']);
+        $this->user = User::factory()->create();
+        $this->user->roles()->sync($role);
+
+        $this->withExceptionHandling();
+    }
 
     public function test_showing_a_movie_if_it_exists(): void
     {
@@ -105,5 +125,60 @@ class MovieControllerTest extends TestCase
             ->assertJsonCount(20, 'data')
             ->assertJsonPath('current_page', 2)
             ->assertJsonPath('last_page', 3);
+    }
+
+    public function test_storing_a_movie_successful(): void
+    {
+        $this->actingAs($this->user);
+
+        $video = Video::factory()->create();
+        $file = UploadedFile::fake()->create('1.webp', 1);
+
+        $response = $this->post('/api/movies/', [
+            'title' => fake()->word(),
+            'description' => fake()->text(),
+            'image' => $file,
+            'video_id' => $video->id,
+        ]);
+
+        $response->assertCreated()
+            ->assertJsonStructure([
+                'data' => [
+                    'id',
+                    'title',
+                    'description',
+                    'image',
+                    'video' => [
+                        'id',
+                        'video',
+                    ],
+                ],
+            ]);
+
+    }
+
+    public function test_destroying_a_movie_successful(): void
+    {
+        $this->actingAs($this->user);
+
+        $movie = Movie::factory()->create();
+
+        $response = $this->delete("/api/movies/{$movie->id}");
+
+        $response->assertOk()
+            ->assertJson([
+                'message' => 'Deleted movie successful',
+            ]);
+    }
+
+    public function test_destroying_a_movie_if_not_exists(): void
+    {
+        $this->actingAs($this->user);
+
+        Movie::query()->delete();
+
+        $response = $this->delete('api/movies/1');
+
+        $response->assertNotFound();
     }
 }

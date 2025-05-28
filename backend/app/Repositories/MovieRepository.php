@@ -41,4 +41,19 @@ class MovieRepository implements MovieRepositoryContract
     {
         return Movie::query()->count();
     }
+
+    public function store(array $data): array
+    {
+        return Movie::query()
+            ->create($data)
+            ->load('video')
+            ->toArray();
+    }
+
+    public function delete(int $id): void
+    {
+        Movie::query()
+            ->where('id', $id)
+            ->delete();
+    }
 }

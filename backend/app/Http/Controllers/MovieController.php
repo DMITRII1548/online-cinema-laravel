@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Movie\IndexRequest;
+use App\Http\Requests\Movie\StoreRequest;
 use App\Http\Resources\Movie\MovieResource;
 use App\Services\MovieService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MovieController extends Controller
@@ -35,5 +37,25 @@ class MovieController extends Controller
         $movie = $this->movieService->find($id);
 
         return MovieResource::make($movie)->resolve();
+    }
+
+    public function store(StoreRequest $request): JsonResponse
+    {
+        $formMovieDTO = $request->toDTO();
+
+        $movie = $this->movieService->store($formMovieDTO);
+
+        return MovieResource::make($movie)
+            ->response()
+            ->setStatusCode(201);
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $this->movieService->delete($id);
+
+        return response()->json([
+            'message' => 'Deleted movie successful',
+        ]);
     }
 }
