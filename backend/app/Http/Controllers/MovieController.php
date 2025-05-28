@@ -10,7 +10,6 @@ use App\Http\Resources\Movie\MovieResource;
 use App\Services\MovieService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class MovieController extends Controller
 {

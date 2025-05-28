@@ -8,7 +8,6 @@ use App\DTOs\Movie\FormMovieDTO;
 use App\DTOs\Movie\MovieDTO;
 use App\Models\Movie;
 use App\Services\MovieService;
-use BaconQrCode\Renderer\Path\Move;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -94,19 +93,19 @@ class MovieServiceTest extends TestCase
     {
         $movie = Movie::factory()->make();
         $movie = FormMovieDTO::fromArray([
-            'title' => $movie->title, 
-            'description' => $movie->description, 
-            'video_id' => $movie->video_id, 
-            'image' => UploadedFile::fake()->create('1.webp', 1), 
+            'title' => $movie->title,
+            'description' => $movie->description,
+            'video_id' => $movie->video_id,
+            'image' => UploadedFile::fake()->create('1.webp', 1),
         ]);
 
         $data = $this->movieService->store($movie);
 
         $this->assertTrue($data instanceof MovieDTo);
         $this->assertDatabaseHas('movies', [
-            'title' => $movie->title, 
-            'description' => $movie->description, 
-            'video_id' => $movie->video_id, 
+            'title' => $movie->title,
+            'description' => $movie->description,
+            'video_id' => $movie->video_id,
         ]);
 
         Storage::assertExists($data->image);

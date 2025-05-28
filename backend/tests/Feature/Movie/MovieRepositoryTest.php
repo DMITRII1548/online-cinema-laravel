@@ -80,7 +80,7 @@ class MovieRepositoryTest extends TestCase
         $this->assertSame($this->movieRepository->getCount(), 10);
     }
 
-    public function test_storing_a_movie_successful(): void 
+    public function test_storing_a_movie_successful(): void
     {
         $movie = Movie::factory()->make();
 

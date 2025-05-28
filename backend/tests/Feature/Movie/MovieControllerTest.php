@@ -154,6 +154,6 @@ class MovieControllerTest extends TestCase
                     ],
                 ],
             ]);
-        
+
     }
 }

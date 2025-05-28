@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Movie;
 
 use App\DTOs\Movie\FormMovieDTO;
-use App\DTOs\Movie\MovieDTO;
-use App\DTOs\Video\FormVideoDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest

@@ -6,7 +6,6 @@ namespace App\Services;
 
 use App\DTOs\Movie\FormMovieDTO;
 use App\DTOs\Movie\MovieDTO;
-use App\Models\Video;
 use App\Repositories\Contracts\MovieRepositoryContract;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
