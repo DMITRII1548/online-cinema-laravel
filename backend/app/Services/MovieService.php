@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\DTOs\Movie\FormMovieDTO;
 use App\DTOs\Movie\MovieDTO;
+use App\Models\Video;
 use App\Repositories\Contracts\MovieRepositoryContract;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class MovieService
 {
@@ -37,5 +40,15 @@ class MovieService
     public function calculateMaxPages(int $count): int
     {
         return (int)ceil($this->movieRepository->getCount() / $count);
+    }
+
+    public function store(FormMovieDTO $movieDTO): MovieDTO
+    {
+        $path = Storage::put('images', $movieDTO->image);
+
+        $data = $movieDTO->toArray();
+        $data['image'] = $path;
+
+        return MovieDTO::fromArray($this->movieRepository->store($data));
     }
 }

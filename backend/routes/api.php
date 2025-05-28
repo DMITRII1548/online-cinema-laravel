@@ -14,6 +14,12 @@ Route::get('/user', function (Request $request) {
 Route::prefix('movies')->group(function () {
     Route::get('/', [MovieController::class, 'index']);
     Route::get('/{movie:id}', [MovieController::class, 'show']);
+
+    Route::middleware('admin')->group(function () {
+        Route::post('/', [MovieController::class, 'store']);
+        // TO DO Route::patch('/{movie:id}', [MovieController::class, 'update']);
+        // TO DO Route::delete('/{movie:id}', [MovieController::class, 'destroy']);
+    });
 });
 
 Route::apiResource('videos', VideoController::class)

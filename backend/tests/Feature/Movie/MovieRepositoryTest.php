@@ -79,4 +79,29 @@ class MovieRepositoryTest extends TestCase
 
         $this->assertSame($this->movieRepository->getCount(), 10);
     }
+
+    public function test_storing_a_movie_successful(): void 
+    {
+        $movie = Movie::factory()->make();
+
+        $data = $this->movieRepository->store([
+            'title' => $movie->title,
+            'description' => $movie->description,
+            'video_id' => $movie->video->id,
+            'image' => $movie->image,
+        ]);
+
+        $this->assertDatabaseHas('movies', [
+            'title' => $movie->title,
+            'description' => $movie->description,
+            'video_id' => $movie->video->id,
+            'image' => $movie->image,
+        ]);
+
+        $this->assertIsArray($data);
+        $this->assertEquals($data['title'], $movie->title);
+        $this->assertEquals($data['description'], $movie->description);
+        $this->assertEquals($data['image'], $movie->image);
+        $this->assertEquals($data['video_id'], $movie->video->id);
+    }
 }

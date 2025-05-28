@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Movie;
 
+use App\DTOs\Movie\FormMovieDTO;
 use App\DTOs\Movie\MovieDTO;
 use App\Models\Movie;
 use App\Services\MovieService;
+use BaconQrCode\Renderer\Path\Move;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\TestCase;
 
@@ -22,6 +26,8 @@ class MovieServiceTest extends TestCase
         $this->withExceptionHandling();
 
         parent::setUp();
+
+        Storage::fake('public');
 
         $this->movieService = app()->make(MovieService::class);
     }
@@ -82,5 +88,27 @@ class MovieServiceTest extends TestCase
         $pages = $this->movieService->calculateMaxPages(20);
 
         $this->assertSame(2, $pages);
+    }
+
+    public function test_storing_a_movie_successfully(): void
+    {
+        $movie = Movie::factory()->make();
+        $movie = FormMovieDTO::fromArray([
+            'title' => $movie->title, 
+            'description' => $movie->description, 
+            'video_id' => $movie->video_id, 
+            'image' => UploadedFile::fake()->create('1.webp', 1), 
+        ]);
+
+        $data = $this->movieService->store($movie);
+
+        $this->assertTrue($data instanceof MovieDTo);
+        $this->assertDatabaseHas('movies', [
+            'title' => $movie->title, 
+            'description' => $movie->description, 
+            'video_id' => $movie->video_id, 
+        ]);
+
+        Storage::assertExists($data->image);
     }
 }
