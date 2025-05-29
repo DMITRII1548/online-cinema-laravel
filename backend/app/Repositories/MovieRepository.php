@@ -50,6 +50,17 @@ class MovieRepository implements MovieRepositoryContract
             ->toArray();
     }
 
+    public function update(int $id, array $data): bool
+    {
+        $movie = Movie::query()->find($id);
+
+        if (!$movie) {
+            return false;
+        }
+
+        return $movie->update($data);
+    }
+
     public function delete(int $id): void
     {
         Movie::query()

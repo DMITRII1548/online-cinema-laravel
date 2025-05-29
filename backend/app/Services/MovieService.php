@@ -51,6 +51,28 @@ class MovieService
         return MovieDTO::fromArray($this->movieRepository->store($data));
     }
 
+    public function update(int $id, FormMovieDTO $movieDTO): bool
+    {
+        $movie = $this->movieRepository->find($id);
+
+        if (!$movie) {
+            abort(404);
+        }
+
+        $movie = MovieDTO::fromArray($movie);
+
+        $data = $movieDTO->toArray();
+
+        if ($movieDTO->image) {
+            Storage::delete($movie->image);
+            $data['image'] = Storage::put('images', $movieDTO->image);
+        } else {
+            unset($data['image']);
+        }
+
+        return $this->movieRepository->update($id, $data);
+    }
+
     public function delete(int $id): void
     {
         $this->find($id);

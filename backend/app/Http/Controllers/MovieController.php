@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Movie\IndexRequest;
 use App\Http\Requests\Movie\StoreRequest;
+use App\Http\Requests\Movie\UpdateRequest;
 use App\Http\Resources\Movie\MovieResource;
 use App\Services\MovieService;
 use Illuminate\Http\JsonResponse;
@@ -48,6 +49,17 @@ class MovieController extends Controller
         return MovieResource::make($movie)
             ->response()
             ->setStatusCode(201);
+    }
+
+    public function update(int $id, UpdateRequest $request): JsonResponse
+    {
+        $formMovieDTO = $request->toDTO();
+
+        $isUpdated = $this->movieService->update($id, $formMovieDTO);
+
+        return response()->json([
+            'updated' => $isUpdated,
+        ]);
     }
 
     public function destroy(int $id): JsonResponse

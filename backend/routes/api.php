@@ -17,7 +17,7 @@ Route::prefix('movies')->group(function () {
 
     Route::middleware('admin')->group(function () {
         Route::post('/', [MovieController::class, 'store']);
-        // TO DO Route::patch('/{movie:id}', [MovieController::class, 'update']);
+        Route::patch('/{movie:id}', [MovieController::class, 'update']);
         Route::delete('/{movie:id}', [MovieController::class, 'destroy']);
     });
 });
