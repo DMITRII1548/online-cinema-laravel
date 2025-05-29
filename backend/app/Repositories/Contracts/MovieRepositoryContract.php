@@ -10,5 +10,6 @@ interface MovieRepositoryContract
     public function paginate(int $page = 1, int $count = 20): ?array;
     public function getCount(): int;
     public function store(array $data): array;
+    public function update(int $id, array $data): bool;
     public function delete(int $id): void;
 }

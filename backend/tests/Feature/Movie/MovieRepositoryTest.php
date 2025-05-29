@@ -115,4 +115,31 @@ class MovieRepositoryTest extends TestCase
             'id' => $movie->id,
         ]);
     }
+
+    public function test_updating_a_movie_successful(): void
+    {
+        $movie = Movie::factory()->create();
+        $updatedMovie = Movie::factory()
+            ->make()
+            ->toArray();
+
+        $isUpdated = $this->movieRepository->update($movie->id, $updatedMovie);
+
+        $updatedMovie['id'] = $movie->id;
+
+        $this->assertEquals($isUpdated, true);
+
+        $this->assertDatabaseHas('movies', $updatedMovie);
+    }
+
+    public function test_updating_a_movie_if_not_exist(): void
+    {
+        Movie::query()->delete();
+
+        $isUpdated = $this->movieRepository->update(1, [
+            'title' => fake()->word(),
+        ]);
+
+        $this->assertEquals($isUpdated, false);
+    }
 }

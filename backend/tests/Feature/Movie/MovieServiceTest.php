@@ -132,4 +132,68 @@ class MovieServiceTest extends TestCase
             $this->assertEquals($e->getStatusCode(), 404);
         }
     }
+
+    public function test_updating_a_movie_with_an_image_successful(): void
+    {
+        $movie = Movie::factory()->create();
+        $data = Movie::factory()->make()->toArray();
+
+        $data['image'] = UploadedFile::fake()->create('1.webp');
+
+        $formMovieDTO = FormMovieDTO::fromArray($data);
+
+        $response = $this->movieService->update($movie->id, $formMovieDTO);
+
+        $this->assertTrue($response);
+        $this->assertDatabaseHas('movies', [
+            'id' => $movie->id,
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'video_id' => $data['video_id'],
+        ]);
+
+        $this->assertDatabaseMissing('movies', [
+            'id' => $movie->id,
+            'image' => $movie->image,
+        ]);
+        Storage::assertMissing($movie->image);
+
+        $movie = $movie->refresh();
+        Storage::assertExists($movie->image);
+    }
+
+    public function test_updating_a_movie_without_an_image_successful(): void
+    {
+        $movie = Movie::factory()->create();
+        $data = Movie::factory()->make()->toArray();
+
+        unset($data['image']);
+
+        $formMovieDTO = FormMovieDTO::fromArray($data);
+
+        $response = $this->movieService->update($movie->id, $formMovieDTO);
+
+        $this->assertTrue($response);
+        $this->assertDatabaseHas('movies', [
+            'id' => $movie->id,
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'video_id' => $data['video_id'],
+        ]);
+    }
+
+    public function test_updating_a_movie_if_not_exist(): void
+    {
+        Movie::query()->delete();
+        $data = Movie::factory()->make()->toArray();
+        $data['image'] = null;
+
+        $formMovieDTO = FormMovieDTO::fromArray($data);
+
+        try {
+            $this->movieService->update(1, $formMovieDTO);
+        } catch (NotFoundHttpException $e) {
+            $this->assertEquals($e->getStatusCode(), 404);
+        }
+    }
 }

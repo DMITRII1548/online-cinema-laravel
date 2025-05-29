@@ -181,4 +181,52 @@ class MovieControllerTest extends TestCase
 
         $response->assertNotFound();
     }
+
+    public function test_updating_a_movie_if_not_exists(): void
+    {
+        $this->actingAs($this->user);
+
+        Movie::query()->delete();
+
+        $data = Movie::factory()->make()->toArray();
+        $data['image'] = null;
+
+        $response = $this->patch('api/movies/1', $data);
+
+        $response->assertNotFound();
+    }
+
+    public function test_updating_a_movie_with_an_image_successful(): void
+    {
+        $this->actingAs($this->user);
+
+        $movie = Movie::factory()->create();
+
+        $data = Movie::factory()->make()->toArray();
+        $data['image'] = UploadedFile::fake()->create('1.webp');
+
+        $response = $this->patch("api/movies/{$movie->id}", $data);
+
+        $response->assertOk()
+            ->assertJson([
+                'updated' => true,
+            ]);
+    }
+
+    public function test_updating_a_movie_without_an_image_successful(): void
+    {
+        $this->actingAs($this->user);
+
+        $movie = Movie::factory()->create();
+
+        $data = Movie::factory()->make()->toArray();
+        $data['image'] = null;
+
+        $response = $this->patch("api/movies/{$movie->id}", $data);
+
+        $response->assertOk()
+            ->assertJson([
+                'updated' => true,
+            ]);
+    }
 }
