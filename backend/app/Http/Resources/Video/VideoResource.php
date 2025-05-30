@@ -10,15 +10,19 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class VideoResource extends JsonResource
 {
     /**
-     * Transform the resource into an array.
+     * Undocumented function
      *
-     * @return array<string, mixed>
+     * @param Request $request
+     * @return array(
+     *     id: int,
+     *     video: string
+     * )
      */
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'video' => $this->getVideoSrc(),
+            'id' => $this->resource->id,
+            'video' => $this->resource->getVideoSrc(),
         ];
     }
 }

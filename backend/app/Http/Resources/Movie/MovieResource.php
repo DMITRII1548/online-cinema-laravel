@@ -11,18 +11,25 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class MovieResource extends JsonResource
 {
     /**
-     * Transform the resource into an array.
+     * Undocumented function
      *
-     * @return array<string, mixed>
+     * @param Request $request
+     * @return array{
+     *     id: int,
+     *     title: string,
+     *     description: string
+     *     image: string,
+     *     video: array
+     * }
      */
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'image' => $this->getImageSrc(),
-            'video' => VideoResource::make($this->video)->resolve(),
+            'id' => $this->resource->id,
+            'title' => $this->resource->title,
+            'description' => $this->resource->description,
+            'image' => $this->resource->getImageSrc(),
+            'video' => VideoResource::make($this->resource->video)->resolve(),
         ];
     }
 }

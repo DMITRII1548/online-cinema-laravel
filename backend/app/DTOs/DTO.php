@@ -9,7 +9,7 @@ use ReflectionProperty;
 
 abstract class DTO
 {
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data): static
     {
         $reflection = new ReflectionClass(static::class);
         $constructorArgs = [];

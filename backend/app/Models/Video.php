@@ -18,6 +18,6 @@ class Video extends Model
 
     public function movie(): HasOne
     {
-        return $this->hadOne(Movie::class);
+        return $this->hasOne(Movie::class);
     }
 }
