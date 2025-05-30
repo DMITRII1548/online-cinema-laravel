@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DTOs;
 
 use ReflectionClass;
+use ReflectionNamedType;
 use ReflectionProperty;
 
 abstract class DTO
@@ -20,7 +21,10 @@ abstract class DTO
             if (isset($data[$propertyName])) {
                 $type = $property->getType();
 
-                if ($type && is_subclass_of($type->getName(), DTO::class)) {
+                if (
+                    $type instanceof ReflectionNamedType &&
+                    is_subclass_of($type->getName(), DTO::class)
+                ) {
                     $constructorArgs[$propertyName] = $data[$propertyName] instanceof DTO
                         ? $data[$propertyName]
                         : $type->getName()::fromArray($data[$propertyName]);

@@ -17,7 +17,7 @@ class MovieResource extends JsonResource
      * @return array{
      *     id: int,
      *     title: string,
-     *     description: string
+     *     description: string,
      *     image: string,
      *     video: array
      * }

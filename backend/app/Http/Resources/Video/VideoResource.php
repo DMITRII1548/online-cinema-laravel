@@ -13,10 +13,10 @@ class VideoResource extends JsonResource
      * Undocumented function
      *
      * @param Request $request
-     * @return array(
+     * @return array{
      *     id: int,
      *     video: string
-     * )
+     * }
      */
     public function toArray(Request $request): array
     {
