@@ -18,6 +18,10 @@ class VideoController extends Controller
     ) {
     }
 
+    /**
+     * @param IndexRequest $request
+     * @return AnonymousResourceCollection
+     */
     public function index(IndexRequest $request): AnonymousResourceCollection
     {
         $page = $request->validated()['page'];
@@ -32,6 +36,10 @@ class VideoController extends Controller
             ]);
     }
 
+    /**
+     * @param int $id
+     * @return array{id: int, video: string}
+     */
     public function show(int $id): array
     {
         $video = $this->videoService->find($id);
@@ -39,12 +47,23 @@ class VideoController extends Controller
         return VideoResource::make($video)->resolve();
     }
 
+    /**
+     * @param StoreRequest $request
+     * @return array{
+     *     done: int,
+     *     status: bool
+     * }|VideoResource
+     */
     public function store(StoreRequest $request): array|VideoResource
     {
         $videoDTO = $request->toDTO();
         return $this->videoService->store($videoDTO);
     }
 
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
     public function destroy(int $id): JsonResponse
     {
         $this->videoService->destroy($id);

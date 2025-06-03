@@ -21,6 +21,13 @@ class VideoService
     ) {
     }
 
+    /**
+     * @param FormVideoDTO $dto
+     * @return array{
+     *     done: int,
+     *     status: bool
+     * }|VideoResource
+     */
     public function store(FormVideoDTO $dto): array|VideoResource
     {
         $request = request();
@@ -65,6 +72,11 @@ class VideoService
         $this->videoRepository->delete($id);
     }
 
+    /**
+     * @param integer $page
+     * @param integer $count
+     * @return Collection<int, VideoDTO>
+     */
     public function paginate(int $page = 1, int $count = 20): Collection
     {
         $videos = $this->videoRepository->paginate($page, $count);

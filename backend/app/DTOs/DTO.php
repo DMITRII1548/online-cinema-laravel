@@ -10,6 +10,10 @@ use ReflectionProperty;
 
 abstract class DTO
 {
+    /**
+     * @param array<string, mixed> $data
+     * @return static
+     */
     public static function fromArray(array $data): static
     {
         $reflection = new ReflectionClass(static::class);
@@ -37,6 +41,9 @@ abstract class DTO
         return new static(...$constructorArgs);
     }
 
+    /** 
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         $objectVars = get_object_vars($this);

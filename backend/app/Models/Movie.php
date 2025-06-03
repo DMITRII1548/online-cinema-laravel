@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Movie extends Model
 {
+    /** @use HasFactory<\Database\Factories\MovieFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -19,6 +20,9 @@ class Movie extends Model
         'video_id',
     ];
 
+    /**
+     * @return BelongsTo<Video, $this>
+     */
     public function video(): BelongsTo
     {
         return $this->belongsTo(Video::class);

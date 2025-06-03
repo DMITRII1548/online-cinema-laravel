@@ -19,7 +19,10 @@ class MovieResource extends JsonResource
      *     title: string,
      *     description: string,
      *     image: string,
-     *     video: array
+     *     video: array{
+     *         id: int,
+     *         video: string
+     *     }
      * }
      */
     public function toArray(Request $request): array

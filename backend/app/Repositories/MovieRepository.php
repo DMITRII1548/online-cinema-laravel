@@ -9,6 +9,22 @@ use App\Repositories\Contracts\MovieRepositoryContract;
 
 class MovieRepository implements MovieRepositoryContract
 {
+    /**
+     * @param int $id
+     * @return null|array{
+     *     id: int,
+     *     title: string,
+     *     description: string,
+     *     image: string,
+     *     video_id: int,
+     *     video: array{
+     *         id: int,
+     *         video: string,
+     *         created_at: string
+     *     },
+     *     created_at: string
+     * }
+     */
     public function find(int $id): ?array
     {
         $movie = Movie::query()
@@ -24,6 +40,23 @@ class MovieRepository implements MovieRepositoryContract
         return $data;
     }
 
+    /**
+     * @param int $page
+     * @param int $count
+     * @return null|array<int, array{
+     *     id: int,
+     *     title: string,
+     *     description: string,
+     *     image: string,
+     *     video_id: int,
+     *     video: array{
+     *         id: int,
+     *         video: string,
+     *         created_at: string
+     *     },
+     *     created_at: string
+     * }>
+     */
     public function paginate(int $page = 1, int $count = 20): ?array
     {
         $offset = ($page - 1) * $count;
@@ -37,11 +70,35 @@ class MovieRepository implements MovieRepositoryContract
         return $movies->isNotEmpty() ? $movies->toArray() : null;
     }
 
+    /**
+     * @return int
+     */
     public function getCount(): int
     {
         return Movie::query()->count();
     }
 
+    /**
+     * @param array{
+     *     title: string,
+     *     description: string,
+     *     video_id: int,
+     *     image: string
+     * } $data
+     * @return array{
+     *     id: int,
+     *     title: string,
+     *     description: string,
+     *     image: string,
+     *     video_id: int,
+     *     video: array{
+     *         id: int,
+     *         video: string,
+     *         created_at: string
+     *     },
+     *     created_at: string
+     * }
+     */
     public function store(array $data): array
     {
         return Movie::query()
@@ -50,6 +107,16 @@ class MovieRepository implements MovieRepositoryContract
             ->toArray();
     }
 
+    /**
+     * @param int $id
+     * @param array{
+     *     title: string,
+     *     description: string,
+     *     video_id: int,
+     *     image: string
+     * } $data
+     * @return bool
+     */
     public function update(int $id, array $data): bool
     {
         $movie = Movie::query()->find($id);
@@ -61,6 +128,10 @@ class MovieRepository implements MovieRepositoryContract
         return $movie->update($data);
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function delete(int $id): void
     {
         Movie::query()

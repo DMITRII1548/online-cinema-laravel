@@ -9,6 +9,14 @@ use App\Repositories\Contracts\VideoRepositoryContract;
 
 class VideoRepository implements VideoRepositoryContract
 {
+    /**
+     * @param array{video: string} $data
+     * @return array{
+     *     id: int,
+     *     video: string,
+     *     created_at: string,
+     * }
+     */
     public function store(array $data): array
     {
         return Video::query()
@@ -16,6 +24,14 @@ class VideoRepository implements VideoRepositoryContract
             ->toArray();
     }
 
+    /**
+     * @param int $id
+     * @return array{
+     *     id: int,
+     *     video: string,
+     *     created_at: string,
+     * }|null
+     */
     public function find(int $id): ?array
     {
         $video = Video::query()
@@ -28,6 +44,10 @@ class VideoRepository implements VideoRepositoryContract
         return $video->toArray();
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function delete(int $id): void
     {
         Video::query()
@@ -35,6 +55,15 @@ class VideoRepository implements VideoRepositoryContract
             ->delete();
     }
 
+    /**
+     * @param int $page
+     * @param int $count
+     * @return array<int, array{
+     *     id: int,
+     *     video: string,
+     *     created_at: string,
+     * }>|null
+     */
     public function paginate(int $page = 1, int $count = 20): ?array
     {
         $offset = ($page - 1) * $count;
@@ -47,6 +76,9 @@ class VideoRepository implements VideoRepositoryContract
         return $videos->isNotEmpty() ? $videos->toArray() : null;
     }
 
+    /**
+     * @return int
+     */
     public function getCount(): int
     {
         return Video::query()
