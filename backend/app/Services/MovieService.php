@@ -62,12 +62,6 @@ class MovieService
     {
         $path = (string)Storage::put('images', $movieDTO->image);
 
-        /** @var array{
-         *     title: string, 
-         *     description: string, 
-         *     video_id: int, 
-         *     image: string
-         * } $data */
         $data = $movieDTO->toArray();
         $data['image'] = $path;
 
@@ -95,7 +89,7 @@ class MovieService
 
         if ($movieDTO->image) {
             Storage::delete($movie->image);
-            $data['image'] = Storage::put('images', $movieDTO->image);
+            $data['image'] = (string)Storage::put('images', $movieDTO->image);
         } else {
             unset($data['image']);
         }

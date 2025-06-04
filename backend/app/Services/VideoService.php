@@ -39,6 +39,9 @@ class VideoService
             abort(500);
         }
 
+        /**
+         * @var AbstractSave $fileReceived
+         */
         $fileReceived = $receiver->receive();
 
         if ($fileReceived->isFinished()) {
@@ -97,7 +100,7 @@ class VideoService
         $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $uniqueFileName = $fileName . '-' . now()->timestamp . '.' . $extension;
 
-        $path = Storage::putFileAs('videos', $file, $uniqueFileName);
+        $path = (string)Storage::putFileAs('videos', $file, $uniqueFileName);
 
         unlink($file->getPathname());
 

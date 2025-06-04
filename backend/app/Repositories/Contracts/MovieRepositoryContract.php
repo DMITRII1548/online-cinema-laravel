@@ -78,7 +78,7 @@ interface MovieRepositoryContract
      *     title: string,
      *     description: string,
      *     video_id: int,
-     *     image: string
+     *     image?: string
      * } $data
      * @return bool
      */

@@ -8,6 +8,18 @@ use App\Http\Resources\Video\VideoResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @method array{
+ *     id: int,
+ *     title: string,
+ *     description: string,
+ *     image: string,
+ *     video: array{
+ *         id: int,
+ *         video: string
+ *     }
+ * } resolve()
+ */
 class MovieResource extends JsonResource
 {
     /**
@@ -28,11 +40,11 @@ class MovieResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->resource->id,
-            'title' => $this->resource->title,
-            'description' => $this->resource->description,
-            'image' => $this->resource->getImageSrc(),
-            'video' => VideoResource::make($this->resource->video)->resolve(),
+            'id' => (int)$this->resource->id,
+            'title' => (string)$this->resource->title,
+            'description' => (string)$this->resource->description,
+            'image' => (string)$this->resource->getImageSrc(),
+            'video' => (array)VideoResource::make($this->resource->video)->resolve(),
         ];
     }
 }

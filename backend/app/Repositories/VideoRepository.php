@@ -19,9 +19,14 @@ class VideoRepository implements VideoRepositoryContract
      */
     public function store(array $data): array
     {
-        return Video::query()
-            ->create($data)
-            ->toArray();
+        $video =  Video::query()
+            ->create($data);
+
+        return [
+            'id' => $video->id,
+            'video' => $video->video,
+            'created_at' => (string)$video->created_at,
+        ];
     }
 
     /**
@@ -41,7 +46,11 @@ class VideoRepository implements VideoRepositoryContract
             return null;
         }
 
-        return $video->toArray();
+        return [
+            'id' => $video->id,
+            'video' => $video->video,
+            'created_at' => (string)$video->created_at,
+        ];
     }
 
     /**

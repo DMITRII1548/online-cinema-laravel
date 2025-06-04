@@ -35,9 +35,19 @@ class MovieRepository implements MovieRepositoryContract
             return null;
         }
 
-        $data = $movie->toArray();
-
-        return $data;
+        return [
+            'id' => $movie->id,
+            'title' => $movie->title,
+            'description' => $movie->description,
+            'image' => $movie->image,
+            'video_id' => $movie->video_id,
+            'video' => [
+                'id' => $movie->video->id,
+                'video' => $movie->video->video,
+                'created_at' => (string)$movie->video->created_at,
+            ],
+            'created_at' => (string)$movie->created_at,
+        ];
     }
 
     /**
@@ -101,10 +111,23 @@ class MovieRepository implements MovieRepositoryContract
      */
     public function store(array $data): array
     {
-        return Movie::query()
+        $movie = Movie::query()
             ->create($data)
-            ->load('video')
-            ->toArray();
+            ->load('video');
+
+        return [
+            'id' => $movie->id,
+            'title' => $movie->title,
+            'description' => $movie->description,
+            'image' => $movie->image,
+            'video_id' => $movie->video_id,
+            'video' => [
+                'id' => $movie->video->id,
+                'video' => $movie->video->video,
+                'created_at' => (string)$movie->video->created_at,
+            ],
+            'created_at' => (string)$movie->created_at,
+        ];
     }
 
     /**
@@ -113,7 +136,7 @@ class MovieRepository implements MovieRepositoryContract
      *     title: string,
      *     description: string,
      *     video_id: int,
-     *     image: string
+     *     image?: string
      * } $data
      * @return bool
      */
