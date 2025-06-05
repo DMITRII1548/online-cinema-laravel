@@ -17,6 +17,10 @@ class MovieService
     ) {
     }
 
+    /**
+     * @param int $id
+     * @return MovieDTO
+     */
     public function find(int $id): MovieDTO
     {
         $movie = $this->movieRepository->find($id);
@@ -28,6 +32,11 @@ class MovieService
         return MovieDTO::fromArray($movie);
     }
 
+    /**
+     * @param int $page
+     * @param int $count
+     * @return Collection<int, MovieDTO>
+     */
     public function paginate(int $page = 1, int $count = 20): Collection
     {
         $movies = $this->movieRepository->paginate($page, $count);
@@ -36,14 +45,26 @@ class MovieService
             ->map(fn (array $movie) => MovieDTO::fromArray($movie));
     }
 
+    /**
+     * @param int $count
+     * @return int
+     */
     public function calculateMaxPages(int $count): int
     {
         return (int)ceil($this->movieRepository->getCount() / $count);
     }
 
+    /**
+     * @param FormMovieDTO $movieDTO
+     * @return MovieDTO
+     */
     public function store(FormMovieDTO $movieDTO): MovieDTO
     {
-        $path = Storage::put('images', $movieDTO->image);
+        if (is_null($movieDTO->image)) {
+            abort(500);
+        }
+
+        $path = (string)Storage::put('images', $movieDTO->image);
 
         $data = $movieDTO->toArray();
         $data['image'] = $path;
@@ -51,6 +72,12 @@ class MovieService
         return MovieDTO::fromArray($this->movieRepository->store($data));
     }
 
+
+    /**
+     * @param int $id
+     * @param FormMovieDTO $movieDTO
+     * @return bool
+     */
     public function update(int $id, FormMovieDTO $movieDTO): bool
     {
         $movie = $this->movieRepository->find($id);
@@ -65,7 +92,7 @@ class MovieService
 
         if ($movieDTO->image) {
             Storage::delete($movie->image);
-            $data['image'] = Storage::put('images', $movieDTO->image);
+            $data['image'] = (string)Storage::put('images', $movieDTO->image);
         } else {
             unset($data['image']);
         }
@@ -73,6 +100,10 @@ class MovieService
         return $this->movieRepository->update($id, $data);
     }
 
+    /**
+     * @param integer $id
+     * @return void
+     */
     public function delete(int $id): void
     {
         $this->find($id);

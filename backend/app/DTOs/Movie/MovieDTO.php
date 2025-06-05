@@ -8,6 +8,15 @@ use App\DTOs\DTO;
 use App\DTOs\Traits\HasImageSrcAttribute;
 use App\DTOs\Video\VideoDTO;
 
+/**
+ * @method array{
+ *     id: int,
+ *     title: string,
+ *     description: string,
+ *     video: VideoDTO,
+ *     image: string
+ * } toArray()
+ */
 final class MovieDTO extends DTO
 {
     use HasImageSrcAttribute;

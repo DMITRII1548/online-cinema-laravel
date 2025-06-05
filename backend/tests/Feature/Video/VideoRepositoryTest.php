@@ -36,11 +36,15 @@ class VideoRepositoryTest extends TestCase
 
     public function test_finding_a_video_successful(): void
     {
-        $video = Video::factory()->create()->toArray();
+        $video = Video::factory()->create();
 
-        $data = $this->videoRepository->find($video['id']);
+        $data = $this->videoRepository->find($video->id);
 
-        $this->assertEquals($data, $video);
+        $this->assertEquals($data, [
+            'id' => $video->id,
+            'video' => $video->video,
+            'created_at' => $video->created_at,
+        ]);
     }
 
     public function test_finding_a_video_if_not_exist(): void
