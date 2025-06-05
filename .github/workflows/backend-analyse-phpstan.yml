@@ -1,4 +1,4 @@
-name: Run Backend Tests
+name: Run Backend phpstan analyse
 
 on:
   push:
@@ -45,11 +45,3 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
-
-    - name: Run tests
-      working-directory: backend
-      env:
-        APP_ENV: testing
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: php artisan test

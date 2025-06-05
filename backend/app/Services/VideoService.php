@@ -21,6 +21,13 @@ class VideoService
     ) {
     }
 
+    /**
+     * @param FormVideoDTO $dto
+     * @return array{
+     *     done: int,
+     *     status: bool
+     * }|VideoResource
+     */
     public function store(FormVideoDTO $dto): array|VideoResource
     {
         $request = request();
@@ -32,6 +39,9 @@ class VideoService
             abort(500);
         }
 
+        /**
+         * @var AbstractSave $fileReceived
+         */
         $fileReceived = $receiver->receive();
 
         if ($fileReceived->isFinished()) {
@@ -65,6 +75,11 @@ class VideoService
         $this->videoRepository->delete($id);
     }
 
+    /**
+     * @param integer $page
+     * @param integer $count
+     * @return Collection<int, VideoDTO>
+     */
     public function paginate(int $page = 1, int $count = 20): Collection
     {
         $videos = $this->videoRepository->paginate($page, $count);
@@ -85,7 +100,7 @@ class VideoService
         $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $uniqueFileName = $fileName . '-' . now()->timestamp . '.' . $extension;
 
-        $path = Storage::putFileAs('videos', $file, $uniqueFileName);
+        $path = (string)Storage::putFileAs('videos', $file, $uniqueFileName);
 
         unlink($file->getPathname());
 

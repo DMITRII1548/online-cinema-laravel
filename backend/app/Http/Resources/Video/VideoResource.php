@@ -7,18 +7,25 @@ namespace App\Http\Resources\Video;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @method array{id:int, video: string} resolve()
+ */
 class VideoResource extends JsonResource
 {
     /**
-     * Transform the resource into an array.
+     * Undocumented function
      *
-     * @return array<string, mixed>
+     * @param Request $request
+     * @return array{
+     *     id: int,
+     *     video: string
+     * }
      */
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'video' => $this->getVideoSrc(),
+            'id' => (int)$this->resource->id,
+            'video' => (string)$this->resource->getVideoSrc(),
         ];
     }
 }

@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace App\DTOs;
 
 use ReflectionClass;
+use ReflectionNamedType;
 use ReflectionProperty;
 
 abstract class DTO
 {
-    public static function fromArray(array $data): self
+    /**
+     * @param array<string, mixed> $data
+     * @return static
+     */
+    public static function fromArray(array $data): static
     {
         $reflection = new ReflectionClass(static::class);
         $constructorArgs = [];
@@ -20,7 +25,10 @@ abstract class DTO
             if (isset($data[$propertyName])) {
                 $type = $property->getType();
 
-                if ($type && is_subclass_of($type->getName(), DTO::class)) {
+                if (
+                    $type instanceof ReflectionNamedType &&
+                    is_subclass_of($type->getName(), DTO::class)
+                ) {
                     $constructorArgs[$propertyName] = $data[$propertyName] instanceof DTO
                         ? $data[$propertyName]
                         : $type->getName()::fromArray($data[$propertyName]);
@@ -33,6 +41,9 @@ abstract class DTO
         return new static(...$constructorArgs);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         $objectVars = get_object_vars($this);
