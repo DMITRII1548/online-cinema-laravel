@@ -13,7 +13,7 @@ class LoginResponse implements LoginResponseContract
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
-        
+
         return response()->json([
             'two_factor' => false,
             'token' => $user->createToken(Hash::make((string)microtime(true)))->plainTextToken,

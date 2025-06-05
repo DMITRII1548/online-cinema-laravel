@@ -43,7 +43,7 @@ interface MovieRepositoryContract
      */
     public function paginate(int $page = 1, int $count = 20): ?array;
 
-    
+
     /**
      * @return int
      */
@@ -83,7 +83,7 @@ interface MovieRepositoryContract
      * @return bool
      */
     public function update(int $id, array $data): bool;
-    
+
     /**
      * @param int $id
      * @return void

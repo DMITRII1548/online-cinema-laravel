@@ -41,7 +41,7 @@ abstract class DTO
         return new static(...$constructorArgs);
     }
 
-    /** 
+    /**
      * @return array<string, mixed>
      */
     public function toArray(): array
