@@ -60,11 +60,14 @@ class MovieService
      */
     public function store(FormMovieDTO $movieDTO): MovieDTO
     {
+        if (is_null($movieDTO->image)) {
+            abort(500);
+        }
+
         $path = (string)Storage::put('images', $movieDTO->image);
 
         $data = $movieDTO->toArray();
         $data['image'] = $path;
-
 
         return MovieDTO::fromArray($this->movieRepository->store($data));
     }

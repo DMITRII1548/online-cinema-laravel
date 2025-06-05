@@ -31,7 +31,19 @@ class MovieRepositoryTest extends TestCase
 
         $data = $this->movieRepository->find($movie->id);
 
-        $this->assertEquals($data, $movie->toArray());
+        $this->assertEquals($data, [
+            'id' => $movie->id,
+            'title' => $movie->title,
+            'description' => $movie->description,
+            'image' => $movie->image,
+            'video_id' => $movie->video_id,
+            'video' => [
+                'id' => $movie->video->id,
+                'video' => $movie->video->video,
+                'created_at' => (string)$movie->video->created_at,
+            ],
+            'created_at' => (string)$movie->created_at,
+        ]);
     }
 
     public function test_find_a_movie_if_it_not_exists(): void

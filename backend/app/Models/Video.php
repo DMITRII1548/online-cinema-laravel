@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property int $id
+ * @property string $video
+ * @property \Carbon\Carbon $created_at
+ * @property Movie $movie
+ */
 class Video extends Model
 {
     /** @use HasFactory<\Database\Factories\VideoFactory> */
