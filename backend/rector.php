@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
@@ -20,7 +21,6 @@ return static function (RectorConfig $config): void {
         LaravelSetList::LARAVEL_ARRAYACCESS_TO_METHOD_CALL,
         LaravelSetList::LARAVEL_CODE_QUALITY,
         LaravelSetList::LARAVEL_COLLECTION,
-        LaravelSetList::LARAVEL_IF_HELPERS,
 
         SetList::DEAD_CODE,
         SetList::PHP_82,

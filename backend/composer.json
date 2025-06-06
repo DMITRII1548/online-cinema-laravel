@@ -64,6 +64,12 @@
         ],
         "analyse": [
             "./vendor/bin/phpstan analyse --memory-limit=2G"
+        ],
+        "refactor": [
+            "vendor/bin/rector process"
+        ],
+        "lint": [
+            "vendor/bin/pint"
         ]
     },
     "extra": {
