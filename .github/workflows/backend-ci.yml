@@ -37,9 +37,19 @@ jobs:
       - name: Refactor
         working-directory: backend
         run: composer refactor
+      - name: Commit after refactor
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto commit after refactor"
+          file_pattern: backend/
       - name: Lint
         working-directory: backend
         run: composer lint
+      - name: Commit linted files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: fix with Laravel Pint"
+          file_pattern: backend/
       - name: Test & Analyse
         working-directory: backend
         run: |
