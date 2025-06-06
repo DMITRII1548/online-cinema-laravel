@@ -10,7 +10,6 @@ use App\Repositories\Contracts\MovieRepositoryContract;
 class MovieRepository implements MovieRepositoryContract
 {
     /**
-     * @param int $id
      * @return null|array{
      *     id: int,
      *     title: string,
@@ -51,8 +50,6 @@ class MovieRepository implements MovieRepositoryContract
     }
 
     /**
-     * @param int $page
-     * @param int $count
      * @return null|array<int, array{
      *     id: int,
      *     title: string,
@@ -80,9 +77,6 @@ class MovieRepository implements MovieRepositoryContract
         return $movies->isNotEmpty() ? $movies->toArray() : null;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return Movie::query()->count();
@@ -131,14 +125,12 @@ class MovieRepository implements MovieRepositoryContract
     }
 
     /**
-     * @param int $id
      * @param array{
      *     title: string,
      *     description: string,
      *     video_id: int,
      *     image?: string
      * } $data
-     * @return bool
      */
     public function update(int $id, array $data): bool
     {
@@ -151,10 +143,6 @@ class MovieRepository implements MovieRepositoryContract
         return $movie->update($data);
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public function delete(int $id): void
     {
         Movie::query()

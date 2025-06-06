@@ -25,7 +25,6 @@ class MovieResource extends JsonResource
     /**
      * Undocumented function
      *
-     * @param Request $request
      * @return array{
      *     id: int,
      *     title: string,
