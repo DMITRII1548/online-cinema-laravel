@@ -1,0 +1,64 @@
+name: Run Backend CI
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+    branches: ["master", "develop"]
+  pull_request:
+    branches: ["master", "develop"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  laravel-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Copy .env
+        working-directory: backend
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install Dependencies
+        working-directory: backend
+        run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Generate key
+        working-directory: backend
+        run: php artisan key:generate
+      - name: Set directory permissions
+        working-directory: backend
+        run: chmod -R 777 storage bootstrap/cache
+      - name: Create SQLite database
+        working-directory: backend
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+      - name: Refactor
+        working-directory: backend
+        run: composer refactor
+      - name: Commit after refactor
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto commit after refactor"
+          file_pattern: backend/
+      - name: Lint
+        working-directory: backend
+        run: composer lint
+      - name: Commit linted files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: fix with Laravel Pint"
+          file_pattern: backend/
+      - name: Test & Analyse
+        working-directory: backend
+        run: |
+          composer test &
+          composer analyse
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite

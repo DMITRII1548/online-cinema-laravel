@@ -15,7 +15,6 @@ class VideoResource extends JsonResource
     /**
      * Undocumented function
      *
-     * @param Request $request
      * @return array{
      *     id: int,
      *     video: string

@@ -22,7 +22,6 @@ class VideoService
     }
 
     /**
-     * @param FormVideoDTO $dto
      * @return array{
      *     done: int,
      *     status: bool
@@ -76,8 +75,6 @@ class VideoService
     }
 
     /**
-     * @param integer $page
-     * @param integer $count
      * @return Collection<int, VideoDTO>
      */
     public function paginate(int $page = 1, int $count = 20): Collection

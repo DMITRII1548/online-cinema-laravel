@@ -31,7 +31,7 @@ class IndexRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'page' => (int)($this->input('page') ?? 1),
+            'page' => (int)($this->input('page', 1)),
         ]);
     }
 }

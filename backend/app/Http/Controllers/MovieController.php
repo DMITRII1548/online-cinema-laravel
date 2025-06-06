@@ -19,10 +19,6 @@ class MovieController extends Controller
     ) {
     }
 
-    /**
-     * @param IndexRequest $request
-     * @return AnonymousResourceCollection
-     */
     public function index(IndexRequest $request): AnonymousResourceCollection
     {
         $page = $request->validated()['page'];
@@ -40,7 +36,6 @@ class MovieController extends Controller
     /**
      * Undocumented function
      *
-     * @param int $id
      * @return array{
      *     id: int,
      *     title: string,
@@ -59,10 +54,6 @@ class MovieController extends Controller
         return MovieResource::make($movie)->resolve();
     }
 
-    /**
-     * @param StoreRequest $request
-     * @return JsonResponse
-     */
     public function store(StoreRequest $request): JsonResponse
     {
         $formMovieDTO = $request->toDTO();
@@ -74,11 +65,6 @@ class MovieController extends Controller
             ->setStatusCode(201);
     }
 
-    /**
-     * @param int $id
-     * @param UpdateRequest $request
-     * @return JsonResponse
-     */
     public function update(int $id, UpdateRequest $request): JsonResponse
     {
         $formMovieDTO = $request->toDTO();
@@ -90,10 +76,6 @@ class MovieController extends Controller
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return JsonResponse
-     */
     public function destroy(int $id): JsonResponse
     {
         $this->movieService->delete($id);

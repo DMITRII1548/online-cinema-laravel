@@ -30,7 +30,6 @@ class VideoRepository implements VideoRepositoryContract
     }
 
     /**
-     * @param int $id
      * @return array{
      *     id: int,
      *     video: string,
@@ -53,10 +52,6 @@ class VideoRepository implements VideoRepositoryContract
         ];
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public function delete(int $id): void
     {
         Video::query()
@@ -65,8 +60,6 @@ class VideoRepository implements VideoRepositoryContract
     }
 
     /**
-     * @param int $page
-     * @param int $count
      * @return array<int, array{
      *     id: int,
      *     video: string,
@@ -85,9 +78,6 @@ class VideoRepository implements VideoRepositoryContract
         return $videos->isNotEmpty() ? $videos->toArray() : null;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return Video::query()
