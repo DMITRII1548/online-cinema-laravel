@@ -34,6 +34,9 @@ class StoreRequest extends FormRequest
 
     public function toDTO(): FormMovieDTO
     {
-        return FormMovieDTO::fromArray($this->validated());
+        $data = $this->validated();
+        $data['video_id'] = (int) $data['video_id'];
+
+        return FormMovieDTO::fromArray($data);
     }
 }

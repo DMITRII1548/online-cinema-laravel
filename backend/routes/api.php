@@ -23,5 +23,5 @@ Route::prefix('movies')->group(function () {
 });
 
 Route::apiResource('videos', VideoController::class)
-    ->except('update')
-    ->middleware('admin');
+    ->middleware(['auth:sanctum', 'admin'])
+    ->except('update');
