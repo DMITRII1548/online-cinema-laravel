@@ -80,7 +80,7 @@ User authentication endpoints including login, registration, and logout.
 </details>
 
 <details>
-<summary><strong>POST /api/user</strong></summary>
+<summary><strong>GET /api/user</strong></summary>
 
 **Description:** User profile info
 
@@ -98,6 +98,131 @@ User authentication endpoints including login, registration, and logout.
     "two_factor_secret":null,
     "two_factor_recovery_codes":null,
     "two_factor_confirmed_at":null
+}
+```
+</details>
+
+## Movie
+
+Movie CRUD endpoints
+
+<details>
+<summary><strong>GET /api/movies?page=1</strong></summary>
+
+**Description:** Get paginated movies
+
+**Response:**
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "title": "nobis",
+            "description": "Sapiente et tenetur omnis quae consequatur exercitationem. Illo enim ut doloremque quaerat dolores. Quod et autem optio assumenda molestiae maxime.",
+            "image": "http://127.0.0.1:8000/storage/C:\\Users\\USER\\AppData\\Local\\Temp\\fak3A03.tmp",
+            "video": {
+                "id": 1,
+                "video": "http://127.0.0.1:8000/storage/C:\\Users\\USER\\AppData\\Local\\Temp\\fak3A14.tmp"
+            }
+        },
+        ...
+    ]
+    "current_page": 1,
+    "last_page": 5
+}
+```
+</details>
+
+<details>
+<summary><strong>GET /api/movies/:id</strong></summary>
+
+**Description:** Get a full movie info with a video
+
+**Response:**
+```json
+{
+    "id": 1,
+    "title": "nobis",
+    "description": "Sapiente et tenetur omnis quae consequatur exercitationem. Illo enim ut doloremque",
+    "image": "http://127.0.0.1:8000/storage/C:\\Users\\USER\\AppData\\Local\\Temp\\fak3A03.tmp",
+    "video": {
+        "id": 1,
+        "video": "http://127.0.0.1:8000/storage/C:\\Users\\USER\\AppData\\Local\\Temp\\fak3A14.tmp"
+    }
+}
+```
+</details>
+
+<details>
+<summary><strong>POST /api/movies</strong></summary>
+
+**Description:** Create a new movie
+
+**Requirement:** Bearer Token and Admin Role
+
+**Request:**
+```json
+{
+    "title": "Some title",
+    "description: "Some description",
+    "image": File|Image,
+    "video_id": 1
+}
+```
+
+**Response:**
+```json
+{
+    "data": {
+        "id": 101,
+        "title": "\"Example\"",
+        "description": "\"Lorem ipsum\"",
+        "image": "http://127.0.0.1:8000/storage/images/SXqaOSXUjuommNE9UVeoDFndD8uDZu6vlljFcGEg.png",
+        "video": {
+            "id": 1,
+            "video": "http://127.0.0.1:8000/storage/C:\\Users\\USER\\AppData\\Local\\Temp\\fak3A14.tmp"
+        }
+    }
+}
+```
+</details>
+
+<details>
+<summary><strong>POST /api/movies/:id</strong></summary>
+
+**Description:** Update a movie
+
+**Requirement:** Bearer Token and Admin Role
+
+**Request:**
+```json
+{
+    "title": "Some title",
+    "description: "Some description",
+    "image": File|Image,
+    "video_id": 1
+}
+```
+
+**Response:**
+```json
+{
+    "updated":true
+}
+```
+</details>
+
+<details>
+<summary><strong>DELETE /api/movies/:id</strong></summary>
+
+**Description:** Delete a movie
+
+**Requirement:** Bearer Token and Admin Role
+
+**Response:**
+```json
+{
+    "message":"Deleted movie successful"
 }
 ```
 </details>
