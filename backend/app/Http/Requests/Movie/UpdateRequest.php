@@ -28,12 +28,15 @@ class UpdateRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:10000',
             'image' => 'nullable|image',
-            'video_id' => 'required|integer|exists:videos,id|unique:movies,video_id',
+            'video_id' => 'required|integer|exists:videos,id',
         ];
     }
 
     public function toDTO(): FormMovieDTO
     {
-        return FormMovieDTO::fromArray($this->validated());
+        $data = $this->validated();
+        $data['video_id'] = (int) $data['video_id'];
+
+        return FormMovieDTO::fromArray($data);
     }
 }

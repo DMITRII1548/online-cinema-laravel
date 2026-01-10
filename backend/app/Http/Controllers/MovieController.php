@@ -34,8 +34,6 @@ class MovieController extends Controller
     }
 
     /**
-     * Undocumented function
-     *
      * @return array{
      *     id: int,
      *     title: string,
