@@ -36,7 +36,7 @@ class StoreRequest extends FormRequest
     {
         $data = $this->validated();
         $data['video_id'] = (int) $data['video_id'];
-        
+
         return FormMovieDTO::fromArray($data);
     }
 }
