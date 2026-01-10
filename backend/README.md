@@ -164,7 +164,7 @@ Movie CRUD endpoints
 ```json
 {
     "title": "Some title",
-    "description: "Some description",
+    "description": "Some description",
     "image": File|Image,
     "video_id": 1
 }
@@ -188,7 +188,7 @@ Movie CRUD endpoints
 </details>
 
 <details>
-<summary><strong>POST /api/movies/:id</strong></summary>
+<summary><strong>PATCH /api/movies/:id</strong></summary>
 
 **Description:** Update a movie
 
@@ -198,7 +198,7 @@ Movie CRUD endpoints
 ```json
 {
     "title": "Some title",
-    "description: "Some description",
+    "description": "Some description",
     "image": File|Image,
     "video_id": 1
 }
@@ -223,6 +223,88 @@ Movie CRUD endpoints
 ```json
 {
     "message":"Deleted movie successful"
+}
+```
+</details>
+
+## VIDEO
+
+Video CRUD endpoints without an update action
+
+<details>
+<summary><strong>GET /api/videos?page=1</strong></summary>
+
+**Description:** Get paginated videos
+
+**Requirement:** Bearer Token and Admin Role
+
+**Response:**
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "video": "http://127.0.0.1:8000/storage/C:\\Users\\USER\\AppData\\Local\\Temp\\fak3A14.tmp"
+        },
+        ...
+    ],
+    "current_page": 1,
+    "last_page": 6
+}
+```
+</details>
+
+<details>
+<summary><strong>GET /api/videos/:id</strong></summary>
+
+**Description:** Get a video
+
+**Requirement:** Bearer Token and Admin Role
+
+**Response:**
+```json
+{
+    "id":2,
+    "video":"http://127.0.0.1:8000/storage/C:\\Users\\USER\\AppData\\Local\\Temp\\fak3A93.tmp"
+}
+```
+</details>
+
+<details>
+<summary><strong>POST /api/videos</strong></summary>
+
+**Description:** Store a video
+
+**Requirement:** Bearer Token and Admin Role
+
+**Request:**
+```json
+{
+    "video": VideoChunk,
+    "resumableChunkNumber": 1
+}
+```
+
+**Response:**
+```json
+{
+    "done": 56.7,
+    "status": true
+}
+```
+</details>
+
+<details>
+<summary><strong>DELETE /api/videos/:id</strong></summary>
+
+**Description:** Delete a video
+
+**Requirement:** Bearer Token and Admin Role
+
+**Response:**
+```json
+{
+    "message":"Video deleted successfully"
 }
 ```
 </details>
