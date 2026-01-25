@@ -3,7 +3,7 @@ import { ROUTES } from '@/constants/routes'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { Link } from 'expo-router'
-import { View } from "react-native"
+import { View } from 'react-native'
 
 const Menu = () => {
     return (
