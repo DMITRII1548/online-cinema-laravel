@@ -8,7 +8,6 @@ type MovieItemsProps = {
 }
 
 const MovieItems: React.FC<MovieItemsProps> = ({movies}) => {
-    console.log(movies, 111)
     return (
         <View className="flex-1 gap-3">
             <FlatList
