@@ -1,8 +1,8 @@
-import { ROUTES } from "@/constants/routes"
-import { Movie } from "@/types/movie"
-import { Link } from "expo-router"
-import React from "react"
-import { Image, Text, View } from "react-native"
+import { ROUTES } from '@/constants/routes'
+import { Movie } from '@/types/movie'
+import { Link } from 'expo-router'
+import React from 'react'
+import { Image, Text, View } from 'react-native'
 
 type MovieItemProps = {
     movie: Movie
@@ -17,9 +17,7 @@ const MovieItem: React.FC<MovieItemProps> = ({ movie }) => {
                     className="w-full h-48 rounded-lg"
                     resizeMode="cover"
                 />
-                <Text className="text-white text-center text-xl font-semibold">
-                    {movie.title}
-                </Text>
+                <Text className="text-white text-center text-xl font-semibold">{movie.title}</Text>
             </Link>
         </View>
     )

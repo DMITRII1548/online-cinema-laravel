@@ -37,10 +37,8 @@ const Index = () => {
                 params: { page: pageNumber },
             })
 
-            setMovies(prev => 
-                pageNumber === 1 
-                    ? response.data.data 
-                    : [...prev, ...response.data.data]
+            setMovies(prev =>
+                pageNumber === 1 ? response.data.data : [...prev, ...response.data.data]
             )
 
             setPage(response.data.current_page)
@@ -66,30 +64,18 @@ const Index = () => {
     return (
         <View className="flex-1 p-4">
             {!error && movies.length > 0 && (
-                <MovieItems 
-                    movies={movies} 
-                    loading={loading}
-                    onLoadMore={loadMore}
-                />
+                <MovieItems movies={movies} loading={loading} onLoadMore={loadMore} />
             )}
 
             {loading && movies.length === 0 && (
-                <Text className="text-white text-xl text-center">
-                    Загрузка...
-                </Text>
+                <Text className="text-white text-xl text-center">Загрузка...</Text>
             )}
 
             {!loading && !error && movies.length === 0 && (
-                <Text className="text-white text-xl text-center">
-                    Фильмы не найдены
-                </Text>
+                <Text className="text-white text-xl text-center">Фильмы не найдены</Text>
             )}
 
-            {error && (
-                <Text className="text-white text-xl text-center">
-                    Нет сети
-                </Text>
-            )}
+            {error && <Text className="text-white text-xl text-center">Нет сети</Text>}
         </View>
     )
 }

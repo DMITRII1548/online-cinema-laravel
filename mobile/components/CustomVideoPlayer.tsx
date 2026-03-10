@@ -1,7 +1,7 @@
-import { Video } from "@/types/video"
-import React from "react"
-import { View, StyleSheet } from "react-native"
-import { useVideoPlayer, VideoView } from 'expo-video';
+import { Video } from '@/types/video'
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
+import { useVideoPlayer, VideoView } from 'expo-video'
 
 type CustomVideoPlayerProps = {
     video: string
@@ -9,10 +9,10 @@ type CustomVideoPlayerProps = {
 
 const CustomVideoPlayer: React.FC<CustomVideoPlayerProps> = ({ video }) => {
     const player = useVideoPlayer(video, player => {
-        player.loop = true;
-        player.play();
-    });
-    
+        player.loop = true
+        player.play()
+    })
+
     return (
         <View className="w-full h-56 rounded-xl overflow-hidden">
             <VideoView
@@ -29,7 +29,7 @@ const CustomVideoPlayer: React.FC<CustomVideoPlayerProps> = ({ video }) => {
 const styles = StyleSheet.create({
     video: {
         flex: 1,
-    }
+    },
 })
 
 export default CustomVideoPlayer
