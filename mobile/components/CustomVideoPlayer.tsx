@@ -4,11 +4,11 @@ import { View, StyleSheet } from "react-native"
 import { useVideoPlayer, VideoView } from 'expo-video';
 
 type CustomVideoPlayerProps = {
-    video: Video
+    video: string
 }
 
 const CustomVideoPlayer: React.FC<CustomVideoPlayerProps> = ({ video }) => {
-    const player = useVideoPlayer(video.video, player => {
+    const player = useVideoPlayer(video, player => {
         player.loop = true;
         player.play();
     });

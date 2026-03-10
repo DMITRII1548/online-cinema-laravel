@@ -1,7 +1,7 @@
+import CustomVideoPlayer from "@/components/CustomVideoPlayer"
 import { Movie } from "@/types/movie"
 import React from "react"
 import { Image, Text, View } from "react-native"
-import CustomVideoPlayer from '../CustomVideoPlayer'
 
 type MovieFullProps = {
     movie: Movie
@@ -24,7 +24,7 @@ const MovieFull: React.FC<MovieFullProps> = ({ movie }) => {
                 {movie.description}
             </Text>
 
-            <CustomVideoPlayer video={movie.video} />
+            <CustomVideoPlayer video={movie.video.video} />
         </View>
     )
 }
