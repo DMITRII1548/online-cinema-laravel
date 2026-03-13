@@ -25,10 +25,8 @@ User authentication endpoints including login, registration, and logout.
 **Request:**
 ```json
 {
-    "name": "Dmitriy"
     "email": "user@example.com",
     "password": "password",
-    "password_confirmation": "password",
 }
 ```
 
