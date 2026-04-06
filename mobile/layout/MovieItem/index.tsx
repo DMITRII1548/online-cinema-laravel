@@ -1,7 +1,7 @@
 import { ROUTES } from '@/constants/routes'
 import { Movie } from '@/types/movie'
 import { Link } from 'expo-router'
-import React from 'react'
+import React, { useState } from 'react'
 import { Image, Text, View } from 'react-native'
 
 type MovieItemProps = {
