@@ -1,24 +1,54 @@
-# Online cinema 
+# 🎬 Online Cinema
 
-This is a simple mobile application of online cinema. This project has backend at "/backend" folder on laravel and mobile application code written via react-native and expo
+A mobile online cinema application built with **Laravel** (backend) and **React Native + Expo** (mobile).
 
-## Stack
-- Backend - PHP, Laravel
-- Mobile - React-Native, Expo
+The project consists of two main parts:
 
-## Backend
-Backend was written via Laravel and PHP with unit and feature tests. 
+* Backend API located in the `/backend` directory
+* Mobile application located in the `/mobile` directory
 
-### Project structure
-- <b>Controller:</b> Getting requests and managing services
-- <b>Service:</b> Business logics
-- <b>Repository:</b> DB
+---
 
-More info with backend documentation: [Click](https://github.com/DMITRII1548/online-cinema-laravel/blob/master/backend/README.md)
+## 🚀 Tech Stack
 
-## Mobile
-Mobile application written via react-native and expo. This application has integration with backend
+### Backend
 
-More info with mobile application documentation: [Click](https://github.com/DMITRII1548/online-cinema-laravel/blob/master/mobile/README.md)
+* PHP
+* Laravel
 
+### Mobile
 
+* React Native
+* Expo
+
+---
+
+## ⚙️ Backend
+
+The backend is built using Laravel and follows a clean architecture approach with separation of concerns. It includes both **unit** and **feature tests** to ensure reliability.
+
+### 🧩 Architecture
+
+* **Controllers** — handle HTTP requests and delegate logic to services
+* **Services** — contain core business logic
+* **Repositories** — handle database interactions
+
+📚 Detailed backend documentation:
+👉 [Backend README](https://github.com/DMITRII1548/online-cinema-laravel/blob/master/backend/README.md)
+
+---
+
+## 📱 Mobile Application
+
+The mobile app is built with React Native using Expo and communicates with the backend API.
+
+It provides a simple and user-friendly interface for interacting with the online cinema platform.
+
+📚 Detailed mobile documentation:
+👉 [Mobile README](https://github.com/DMITRII1548/online-cinema-laravel/blob/master/mobile/README.md)
+
+---
+
+## 👨‍💻 Author
+
+Dmitrii Korsunov
