@@ -11,7 +11,6 @@ const Favourites = () => {
     const [movies, setMovies] = useState<Movie[]>([])
     const [favors, setFavors] = useState<number[]>([])
     const [loading, setLoading] = useState<boolean>(false)
-    const [loadMore, setLoadMore] = useState<boolean>(false)
 
     const getFavors = async () => {
         let item = await getItem('favor_movies')
@@ -51,7 +50,7 @@ const Favourites = () => {
     }, [favors])
 
     return (
-        <View className="flex-1 justify-center items-center p-4">
+        <View className="flex-1 p-4">
             <Text className="text-white text-xl font-bold text-center">Watch later</Text>
 
             {favors.length === 0 && (
@@ -59,7 +58,7 @@ const Favourites = () => {
             )}
 
             {favors.length > 0 && (
-                <MovieItems movies={movies} onLoadMore={loadMore} loading={loading} />
+                <MovieItems movies={movies} onLoadMore={() => {}} loading={loading} />
             )}
         </View>
     )
