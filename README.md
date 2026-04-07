@@ -47,8 +47,5 @@ It provides a simple and user-friendly interface for interacting with the online
 📚 Detailed mobile documentation:
 👉 [Mobile README](https://github.com/DMITRII1548/online-cinema-laravel/blob/master/mobile/README.md)
 
----
-
-## 👨‍💻 Author
-
-Dmitrii Korsunov
+**Thank you, that you select this repository!** <br>
+**If you liked this repository please make a star on it!**
